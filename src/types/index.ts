@@ -30,4 +30,5 @@ export interface GameObject {
   status: 'loading' | 'ready'
   boardRows: BoardRows
   pieces: Piece[]
+  selectedPiece?: Piece
 }

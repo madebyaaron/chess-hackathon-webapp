@@ -1,7 +1,9 @@
 import { generatePieces } from '.'
 
 describe('generate pieces', () => {
-  it.todo('creates a complete set of pieces for each player')
+  it('creates a complete set of pieces for each player', () => {
+    generatePieces()
+  })
   it.todo('all pieces are in initially in their correct positions')
 })
 
