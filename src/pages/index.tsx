@@ -4,7 +4,7 @@ import { generatePieces } from 'src/lib/piece'
 import { GameObject } from '@/types'
 
 const initialGameObject: GameObject = {
-  status: 'ready',
+  status: `ready`,
   boardRows: generateBoard(),
   pieces: generatePieces(),
 }
