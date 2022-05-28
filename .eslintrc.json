@@ -37,6 +37,7 @@
     "no-console":["error", { "allow": ["warn", "error", "info"] }],
     "react/no-unescaped-entities": 0,
     "@typescript-eslint/no-var-requires": 0,
+    "quotes": ["error", "backtick"],
     "@next/next/no-html-link-for-pages": ["error", "next/pages/"],
     "import/no-extraneous-dependencies": [
       "error",

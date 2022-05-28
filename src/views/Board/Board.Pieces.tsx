@@ -6,8 +6,8 @@ import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'
 interface Props extends Component {}
 
 export function BoardPieces({
-  className = '',
-  testId = 'board-underlay',
+  className = ``,
+  testId = `board-pieces`,
 }: Props) {
   const [gameObject, dispatch] = useGameObject()
 
@@ -17,7 +17,7 @@ export function BoardPieces({
   ) {
     e.stopPropagation()
     if (piece === gameObject.selectedPiece) return
-    dispatch({ type: 'SELECT', piece })
+    dispatch({ type: `SELECT`, piece })
   }
 
   return (
@@ -36,12 +36,20 @@ export function BoardPieces({
             data-testid="piece"
             id={`piece-${piece.id}`}
             className={`flex items-center justify-center cursor-pointer pointer-events-auto ${
-              isSelected ? 'bg-amber-400' : 'hover:bg-amber-500'
+              isSelected ? `bg-amber-400` : `hover:bg-amber-500`
             } ${piecePositionClassName}`}
             key={piece.id}
             onClick={e => handlePieceClick(piece, e)}
           >
-            {piece.name}
+            <span
+              className={`inline-block pt-2 pb-2.5 px-4 leading-none rounded-[2em] font-semibold ${
+                piece.player === `white`
+                  ? `bg-white text-slate-700 border-2 border-slate-700`
+                  : `text-white bg-slate-700 border-2 border-white`
+              }`}
+            >
+              {piece.name}
+            </span>
           </div>
         )
       })}

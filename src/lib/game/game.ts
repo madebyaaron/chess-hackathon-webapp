@@ -4,7 +4,7 @@ import { GameObject } from '@/types'
 
 export function generateGameObject(): GameObject {
   return {
-    status: 'ready',
+    status: `ready`,
     boardRows: generateBoard(),
     pieces: generatePieces(),
   }
