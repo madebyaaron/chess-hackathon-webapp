@@ -1,8 +1,16 @@
 import { Board } from '@/views/Board'
-import Head from 'next/head'
+import { generateBoard } from 'src/lib/board'
+import { generatePieces } from 'src/lib/piece'
+import { GameObject } from '@/types'
+
+const initialGameObject: GameObject = {
+  status: 'ready',
+  boardRows: generateBoard(),
+  pieces: generatePieces(),
+}
 
 function Home() {
-  return <Board />
+  return <Board initialGameObject={initialGameObject} />
 }
 
 export default Home

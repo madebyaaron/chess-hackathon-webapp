@@ -1,10 +1,14 @@
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    `./src/pages/**/*.{js,ts,jsx,tsx}`,
+    `./src/**/*.{js,ts,jsx,tsx}`,
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        '8': 'repeat(8, minmax(0, 1fr))',
+      },
+    },
   },
   plugins: [],
 }
