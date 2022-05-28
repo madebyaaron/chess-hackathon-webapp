@@ -1,4 +1,13 @@
-import { BoardRows, BoardPosition, BoardCell } from '@/types'
+import {
+  BoardRows,
+  BoardPosition,
+  BoardCell,
+  PieceMovementRange,
+  GameObject,
+  BoardRow,
+  BoardColumn,
+  PositionAdjustmentAmount,
+} from '@/types'
 
 const gridColumnClassNames = {
   '1': `col-start-1`,
@@ -35,7 +44,7 @@ export function generateBoard(): BoardRows {
   const rows = new Array(8).fill(null).map(() => new Array(8).fill({}))
 
   const augmentedRows = rows.map((_, index) => {
-    const rowLabel = String.fromCharCode(97 + index)
+    const rowLabel = String.fromCharCode(65 + index)
     return new Array(8).fill(null).map(
       (_, index) =>
         ({
@@ -43,6 +52,47 @@ export function generateBoard(): BoardRows {
         } as BoardCell)
     )
   })
+  const reversedRows = augmentedRows.reverse()
+  return reversedRows
+}
 
-  return augmentedRows.reverse()
+export function calculateTraversableCellPositions(
+  currentPosition: BoardPosition,
+  movementRange: PieceMovementRange,
+  gameObject: GameObject
+) {
+  const traversableCellPositions = movementRange.map(rangeItem => {
+    //
+  })
+}
+
+export function adjustBoardRow(
+  boardRow: BoardRow,
+  amount: PositionAdjustmentAmount
+): string | false {
+  const minCharCode = 65
+  const maxCharCode = 72
+
+  const charCode = boardRow.charCodeAt(0)
+  const adjustedCharCode = charCode + amount
+  if (adjustedCharCode < minCharCode) return false
+  if (adjustedCharCode > maxCharCode) return false
+  const newCharString = String.fromCharCode(adjustedCharCode)
+  return newCharString
+}
+
+export function adjustBoardCol(
+  boardCol: BoardColumn,
+  amount: PositionAdjustmentAmount
+): string | false {
+  const minNumber = 1
+  const maxNumber = 8
+  const parsedInt = parseInt(boardCol)
+  const adjustedInt = parsedInt + amount
+
+  if (adjustedInt < minNumber) return false
+  if (adjustedInt > maxNumber) return false
+  const stringifiedInt = adjustedInt.toString()
+
+  return stringifiedInt
 }

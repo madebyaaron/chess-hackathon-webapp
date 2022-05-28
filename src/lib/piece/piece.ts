@@ -198,35 +198,60 @@ export function generatePieces(): Piece[] {
   ]
 }
 
-type XDistance = number
-type YDistance = number
+type UpDistance = number
+type RightDistance = number
+type BottomDistance = number
+type LeftDistance = number
 interface PieceDefinition {
   name: PieceName
-  movements: [XDistance, YDistance][]
+  movementRange: [UpDistance, RightDistance, BottomDistance, LeftDistance][]
 }
 
-export const pieceDefinitions: PieceDefinition[] = [
+const pieceDefinitions: PieceDefinition[] = [
   {
     name: `pawn`,
-    movements: [[0, 1]],
+    movementRange: [[1, 0, 0, 0]],
   },
-  // {
-  //   name: `rook`,
-  //   movements: [
-  //     [0, 1],
-  //     [0, 2],
-  //     [0, 3],
-  //     [0, 4],
-  //     [0, 5],
-  //     [0, 6],
-  //     [0, 7],
-  //     [1, 0],
-  //     [2, 0],
-  //     [3, 0],
-  //     [4, 0],
-  //     [5, 0],
-  //     [6, 0],
-  //     [7, 0],
-  //   ],
-  // },
+  {
+    name: `rook`,
+    movementRange: [
+      [1, 0, 0, 0],
+      [2, 0, 0, 0],
+      [3, 0, 0, 0],
+      [4, 0, 0, 0],
+      [5, 0, 0, 0],
+      [6, 0, 0, 0],
+      [7, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 2, 0, 0],
+      [0, 3, 0, 0],
+      [0, 4, 0, 0],
+      [0, 5, 0, 0],
+      [0, 6, 0, 0],
+      [0, 7, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 2, 0],
+      [0, 0, 3, 0],
+      [0, 0, 4, 0],
+      [0, 0, 5, 0],
+      [0, 0, 6, 0],
+      [0, 0, 7, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 2],
+      [0, 0, 0, 3],
+      [0, 0, 0, 4],
+      [0, 0, 0, 5],
+      [0, 0, 0, 6],
+      [0, 0, 0, 7],
+    ],
+  },
 ]
+
+export function resolvePieceDefinition(name: PieceName) {
+  return pieceDefinitions.find(p => p.name === name)
+}
+
+export function resolvePieceMovementRange(name: PieceName) {
+  const pieceDefinition = resolvePieceDefinition(name)
+  return pieceDefinition?.movementRange
+}

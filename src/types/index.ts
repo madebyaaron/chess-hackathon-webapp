@@ -14,10 +14,27 @@ export type BoardRows = BoardCell[][]
 export type BoardPosition = [BoardRow, BoardColumn]
 export type BoardColumn = `1` | `2` | `3` | `4` | `5` | `6` | `7` | `8`
 export type BoardRow = `A` | `B` | `C` | `D` | `E` | `F` | `G` | `H`
+export type BoardPositionString = string
+export type PositionAdjustmentAmount =
+  | -1
+  | -2
+  | -3
+  | -4
+  | -5
+  | -6
+  | -7
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
 
 // Pieces
 export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
 
+export type PieceMovementRange = [number, number, number, number][]
 export interface Piece {
   id: string
   name: PieceName
