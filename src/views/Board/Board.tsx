@@ -15,7 +15,7 @@ export function Board({ initialGameObject, testId = `board` }: Props) {
         className="flex items-center justify-center w-full h-full min-h-screen bg-slate-200"
         data-testid={testId}
       >
-        <div className="grid items-center justify-center grid-cols-1 grid-rows-1">
+        <div className="grid justify-center grid-cols-1 grid-rows-1 h-[80vh] aspect-square items-stretch">
           <BoardPieces className="z-10 col-start-1 row-start-1" />
           <BoardGrid className="col-start-1 row-start-1" />
         </div>

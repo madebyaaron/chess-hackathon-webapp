@@ -22,7 +22,7 @@ export function BoardPieces({
 
   return (
     <div
-      className={`grid grid-cols-8 grid-rows-8 w-[1000px] h-[1000px] shadow-xl/.5 col-start-1 row-start-1 pointer-events-none ${className}`}
+      className={`grid grid-cols-8 grid-rows-8 shadow-xl/.5 col-start-1 row-start-1 pointer-events-none ${className}`}
       data-testid={testId}
     >
       {gameObject.pieces.map(piece => {

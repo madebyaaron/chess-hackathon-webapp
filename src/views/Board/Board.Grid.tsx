@@ -13,7 +13,7 @@ export function BoardGrid({ className = '', testId = 'board-pieces' }: Props) {
 
   return (
     <div
-      className={`grid grid-cols-8 w-[1000px] h-[1000px] shadow-xl/.5 ${className}`}
+      className={`grid grid-cols-8 shadow-xl/.5 ${className}`}
       data-testid={testId}
     >
       {gameObject.boardRows.map((row, rowIndex) =>
