@@ -41,11 +41,11 @@ describe('generate board', () => {
 
 describe('resolveGridPositionClassNameFromBoardPosition', () => {
   const resultA = resolveGridPositionClassNameFromBoardPosition(['A', '2'])
-  expect(resultA).toEqual(`row-start-8 column-start-2`)
+  expect(resultA).toEqual(`row-start-8 col-start-2`)
 
   const resultB = resolveGridPositionClassNameFromBoardPosition(['F', '4'])
-  expect(resultB).toEqual(`row-start-3 column-start-4`)
+  expect(resultB).toEqual(`row-start-3 col-start-4`)
 
   const resultC = resolveGridPositionClassNameFromBoardPosition(['H', '7'])
-  expect(resultC).toEqual(`row-start-1 column-start-7`)
+  expect(resultC).toEqual(`row-start-1 col-start-7`)
 })

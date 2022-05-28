@@ -11,6 +11,16 @@ describe(`Board`, () => {
     expect(screen.getByTestId(`board`)).toBeVisible()
   })
 
+  it('renders the underlay', () => {
+    render(<Board initialGameObject={gameObject} />)
+    expect(screen.getByTestId(`board-underlay`)).toBeVisible()
+  })
+
+  it('renders the pieces', () => {
+    render(<Board initialGameObject={gameObject} />)
+    expect(screen.getByTestId(`board-pieces`)).toBeVisible()
+  })
+
   it('renders out 64 board cells', () => {
     render(<Board initialGameObject={gameObject} />)
     expect(screen.getAllByTestId('board-cell').length).toEqual(64)

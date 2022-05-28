@@ -1,14 +1,14 @@
 import { BoardRows, BoardPosition, BoardCell } from '@/types'
 
 const gridColumnClassNames = {
-  '1': 'column-start-1',
-  '2': 'column-start-2',
-  '3': 'column-start-3',
-  '4': 'column-start-4',
-  '5': 'column-start-5',
-  '6': 'column-start-6',
-  '7': 'column-start-7',
-  '8': 'column-start-8',
+  '1': 'col-start-1',
+  '2': 'col-start-2',
+  '3': 'col-start-3',
+  '4': 'col-start-4',
+  '5': 'col-start-5',
+  '6': 'col-start-6',
+  '7': 'col-start-7',
+  '8': 'col-start-8',
 }
 
 const gridRowClassNames = {
