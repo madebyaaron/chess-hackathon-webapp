@@ -23,7 +23,6 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
       dispatch({ type: `SELECT`, piece: undefined })
       return
     }
-
     dispatch({ type: `SELECT`, piece })
   }
 

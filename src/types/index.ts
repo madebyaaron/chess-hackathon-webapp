@@ -11,9 +11,8 @@ export interface BoardCell {
   position: BoardPosition
 }
 export type BoardRows = BoardCell[][]
-export type BoardPosition = [BoardRow, BoardColumn]
-export type BoardColumn = `1` | `2` | `3` | `4` | `5` | `6` | `7` | `8`
-export type BoardRow = `A` | `B` | `C` | `D` | `E` | `F` | `G` | `H`
+export type BoardPosition = [BoardPositionNode, BoardPositionNode]
+export type BoardPositionNode = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 export type BoardPositionString = string
 export type PositionAdjustmentAmount =
   | -1
