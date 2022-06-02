@@ -1,5 +1,6 @@
 import { BoardPosition, BoardPositionString, Component } from '@/types'
 import { useEffect, useState } from 'react'
+import { BoardCell } from 'src/compositions/BoardCell'
 // import { resolvePieceMovementRange } from 'src/lib/piece'
 import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'
 
@@ -29,17 +30,6 @@ export function BoardGrid({
     if (piece) dispatch({ type: `MOVE`, piece, position })
   }
 
-  const variants = {
-    standardColours: {
-      white: `even:bg-slate-700 even:text-white`,
-      black: `odd:bg-slate-700 odd:text-white`,
-    },
-    highlightedColours: {
-      white: `even:bg-slate-500 even:text-white`,
-      black: `odd:bg-slate-500 odd:text-white`,
-    },
-  }
-
   return (
     <div
       className={`grid grid-cols-8 shadow-xl/.5 ${className}`}
@@ -47,25 +37,19 @@ export function BoardGrid({
     >
       {gameObject.boardRows.map((row, rowIndex) =>
         row.map(cell => {
-          const cellColor = rowIndex % 2 === 1 ? `black` : `white`
+          const cellTheme = rowIndex % 2 === 1 ? `odd` : `even`
           const isHighlighted = highlightedCells.includes(
-            cell.position.join(``)
+            cell.position.join(`,`)
           )
 
           return (
-            <div
-              data-testid="board-cell"
-              id={`board-cell-${cell.position.join(``)}`}
+            <BoardCell
+              key={cell.position.join(`,`)}
+              cell={cell}
+              cellTheme={cellTheme}
+              isHighlighted={isHighlighted}
               onClick={() => handleCellClick(cell.position)}
-              className={`bg-white flex items-center justify-center ${
-                isHighlighted
-                  ? variants.highlightedColours[cellColor]
-                  : variants.standardColours[cellColor]
-              }`}
-              key={cell.position.join(``)}
-            >
-              <span className="opacity-30">{`${cell.position.toString()}`}</span>
-            </div>
+            />
           )
         })
       )}

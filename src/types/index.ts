@@ -47,4 +47,5 @@ export interface GameObject {
   boardRows: BoardRows
   pieces: Piece[]
   selectedPiece?: Piece
+  highlightedCells: BoardPositionString[]
 }

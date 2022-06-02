@@ -26,6 +26,17 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     dispatch({ type: `SELECT`, piece })
   }
 
+  const variants = {
+    white: {
+      initial: `bg-white border-2 font-bold border-slate-700 text-slate-700`,
+      selected: `bg-white border-2 font-bold border-slate-700 bg-rose-300 `,
+    },
+    black: {
+      initial: `text-white bg-slate-700 border-2 border-white font-semibold`,
+      selected: `bg-rose-700 text-white  border-2 border-white  font-semibold`,
+    },
+  }
+
   return (
     <div
       data-testid={testId}
@@ -38,13 +49,9 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     >
       <span
         className={`inline-block pt-2 pb-2.5 px-4 leading-none rounded-[2em] ${
-          piece.player === `white`
-            ? `bg-white  border-2 font-bold ${
-                isHighlighted
-                  ? `border-slate-700 bg-rose-500 text-white`
-                  : `border-slate-700 text-slate-700`
-              }`
-            : `text-white bg-slate-700 border-2 border-white  font-semibold`
+          isHighlighted
+            ? variants[piece.player].selected
+            : variants[piece.player].initial
         }`}
       >
         {piece.name}

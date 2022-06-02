@@ -1,4 +1,4 @@
-import { Piece } from 'src/comps/Piece'
+import { Piece } from 'src/compositions/Piece'
 import { Component } from '@/types'
 import React from 'react'
 import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'

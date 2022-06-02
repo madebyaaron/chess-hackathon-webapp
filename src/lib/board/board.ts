@@ -31,8 +31,8 @@ const gridRowClassNames = {
 export function resolveGridPositionClassNameFromBoardPosition(
   boardPosition: BoardPosition
 ) {
-  const rowClassName = gridRowClassNames[boardPosition[0]]
-  const columnClassName = gridColumnClassNames[boardPosition[1]]
+  const columnClassName = gridColumnClassNames[boardPosition[0]]
+  const rowClassName = gridRowClassNames[boardPosition[1]]
 
   return `${rowClassName} ${columnClassName}`
 }
@@ -44,7 +44,7 @@ export function generateBoard(): BoardRows {
     return new Array(8).fill(null).map(
       (_, columnIndex) =>
         ({
-          position: [rowIndex + 1, columnIndex + 1],
+          position: [columnIndex + 1, rowIndex + 1],
         } as BoardCell)
     )
   })
