@@ -27,10 +27,167 @@ describe(`generate pieces`, () => {
 
 describe(`resolvePieceDefinition`, () => {
   it(`returns the definition matching the provided name`, () => {
-    const resolvedDefinition = resolvePieceDefinition(`pawn`)
-    expect(resolvedDefinition).toEqual({
+    expect(resolvePieceDefinition(`pawn`)).toEqual({
       name: `pawn`,
       movementRange: [[1, 0, 0, 0]],
+    })
+
+    expect(resolvePieceDefinition(`rook`)).toEqual({
+      name: `rook`,
+      movementRange: [
+        [1, 0, 0, 0],
+        [2, 0, 0, 0],
+        [3, 0, 0, 0],
+        [4, 0, 0, 0],
+        [5, 0, 0, 0],
+        [6, 0, 0, 0],
+        [7, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 2, 0, 0],
+        [0, 3, 0, 0],
+        [0, 4, 0, 0],
+        [0, 5, 0, 0],
+        [0, 6, 0, 0],
+        [0, 7, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 2, 0],
+        [0, 0, 3, 0],
+        [0, 0, 4, 0],
+        [0, 0, 5, 0],
+        [0, 0, 6, 0],
+        [0, 0, 7, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 2],
+        [0, 0, 0, 3],
+        [0, 0, 0, 4],
+        [0, 0, 0, 5],
+        [0, 0, 0, 6],
+        [0, 0, 0, 7],
+      ],
+    })
+
+    expect(resolvePieceDefinition(`bishop`)).toEqual({
+      name: `bishop`,
+      movementRange: [
+        [1, 1, 0, 0],
+        [2, 2, 0, 0],
+        [3, 3, 0, 0],
+        [4, 4, 0, 0],
+        [5, 5, 0, 0],
+        [6, 6, 0, 0],
+        [7, 7, 0, 0],
+        [0, 1, 1, 0],
+        [0, 2, 2, 0],
+        [0, 3, 3, 0],
+        [0, 4, 4, 0],
+        [0, 5, 5, 0],
+        [0, 6, 6, 0],
+        [0, 7, 7, 0],
+        [0, 0, 1, 1],
+        [0, 0, 2, 2],
+        [0, 0, 3, 3],
+        [0, 0, 4, 4],
+        [0, 0, 5, 5],
+        [0, 0, 6, 6],
+        [0, 0, 7, 7],
+        [1, 0, 0, 1],
+        [2, 0, 0, 2],
+        [3, 0, 0, 3],
+        [4, 0, 0, 4],
+        [5, 0, 0, 5],
+        [6, 0, 0, 6],
+        [7, 0, 0, 7],
+      ],
+    })
+
+    expect(resolvePieceDefinition(`king`)).toEqual({
+      name: `king`,
+      movementRange: [
+        [1, 0, 0, 0],
+        [1, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 1],
+        [0, 0, 0, 1],
+        [1, 0, 0, 1],
+      ],
+    })
+
+    expect(resolvePieceDefinition(`knight`)).toEqual({
+      name: `knight`,
+      movementRange: [
+        [2, 1, 0, 0],
+        [2, 0, 0, 1],
+        [1, 2, 0, 0],
+        [1, 0, 0, 2],
+        [0, 1, 2, 0],
+        [0, 0, 2, 1],
+        [0, 2, 1, 0],
+        [0, 0, 1, 2],
+      ],
+    })
+
+    expect(resolvePieceDefinition(`queen`)).toEqual({
+      name: `queen`,
+      movementRange: [
+        [1, 1, 0, 0],
+        [2, 2, 0, 0],
+        [3, 3, 0, 0],
+        [4, 4, 0, 0],
+        [5, 5, 0, 0],
+        [6, 6, 0, 0],
+        [7, 7, 0, 0],
+        [0, 1, 1, 0],
+        [0, 2, 2, 0],
+        [0, 3, 3, 0],
+        [0, 4, 4, 0],
+        [0, 5, 5, 0],
+        [0, 6, 6, 0],
+        [0, 7, 7, 0],
+        [0, 0, 1, 1],
+        [0, 0, 2, 2],
+        [0, 0, 3, 3],
+        [0, 0, 4, 4],
+        [0, 0, 5, 5],
+        [0, 0, 6, 6],
+        [0, 0, 7, 7],
+        [1, 0, 0, 1],
+        [2, 0, 0, 2],
+        [3, 0, 0, 3],
+        [4, 0, 0, 4],
+        [5, 0, 0, 5],
+        [6, 0, 0, 6],
+        [7, 0, 0, 7],
+        [1, 0, 0, 0],
+        [2, 0, 0, 0],
+        [3, 0, 0, 0],
+        [4, 0, 0, 0],
+        [5, 0, 0, 0],
+        [6, 0, 0, 0],
+        [7, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 2, 0, 0],
+        [0, 3, 0, 0],
+        [0, 4, 0, 0],
+        [0, 5, 0, 0],
+        [0, 6, 0, 0],
+        [0, 7, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 2, 0],
+        [0, 0, 3, 0],
+        [0, 0, 4, 0],
+        [0, 0, 5, 0],
+        [0, 0, 6, 0],
+        [0, 0, 7, 0],
+        [0, 0, 0, 1],
+        [0, 0, 0, 2],
+        [0, 0, 0, 3],
+        [0, 0, 0, 4],
+        [0, 0, 0, 5],
+        [0, 0, 0, 6],
+        [0, 0, 0, 7],
+      ],
     })
   })
 })
@@ -38,6 +195,7 @@ describe(`resolvePieceDefinition`, () => {
 describe(`resolveValidPieceMoves`, () => {
   it(`returns all valid moves for the piece and player color provided`, () => {
     expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2])).toEqual([[1, 3]])
+
     expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7])).toEqual([[1, 6]])
   })
 })
