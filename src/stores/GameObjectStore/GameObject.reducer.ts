@@ -1,5 +1,5 @@
 import { BoardPosition, GameObject, Piece } from '@/types'
-import { resolveValidPieceMoves } from 'src/lib/piece'
+import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
 
 export type ReducerAction =
   | { type: `SELECT`; piece: Piece | undefined }
@@ -27,10 +27,25 @@ export function gameObjectReducer(
   }
 
   if (action.type === `MOVE`) {
+    // can unit move
+    const selectedPiece = action.piece
+    const { name, player, position } = selectedPiece
+    const targetPosition = action.position
+
+    const isValidMove = ensureNewPositionIsValid(
+      name,
+      player,
+      position,
+      targetPosition
+    )
+
+    if (!isValidMove) return game
+
     const newPieces = game.pieces.map(piece => {
-      if (piece === action.piece) return { ...piece, position: action.position }
-      return piece
+      const updatedPiece = { ...piece, position: action.position }
+      return piece === selectedPiece ? updatedPiece : piece
     })
+
     return { ...game, pieces: newPieces, validMoves: [] }
   }
 

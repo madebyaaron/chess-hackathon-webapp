@@ -270,3 +270,16 @@ export function resolveValidPieceMoves(
 
   return validMoves as BoardPosition[]
 }
+
+export function ensureNewPositionIsValid(
+  name: PieceName,
+  player: PlayerColor,
+  currentPosition: BoardPosition,
+  newPosition: BoardPosition
+) {
+  const validPieceMoves = resolveValidPieceMoves(name, player, currentPosition)
+  const doesValidMovesIncludeNewPosition = validPieceMoves.some(
+    move => move[0] === newPosition[0] && move[1] === newPosition[1]
+  )
+  return doesValidMovesIncludeNewPosition
+}
