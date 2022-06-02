@@ -38,21 +38,6 @@ describe(`gameObjectReducer`, () => {
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
     })
 
-    it.skip(`returns a result containing valid pawn moves when selecting a pawn`, () => {
-      const game = generateGameObject()
-      const selectedPawn = game.pieces.find(
-        p => p.name === `pawn` && p.player === `white`
-      )
-
-      const result = gameObjectReducer(game, {
-        type: `SELECT`,
-        piece: selectedPawn,
-      })
-
-      const validMoves = [[1, 6]]
-      expect(result.validMoves).toEqual(validMoves)
-    })
-
     it(`deselecting a piece should set no valid moves in result`, () => {
       const game = generateGameObject()
 
