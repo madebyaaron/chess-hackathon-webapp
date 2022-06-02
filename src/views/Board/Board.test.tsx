@@ -39,4 +39,20 @@ describe(`Board`, () => {
       expect(pieceElem).toHaveClass(piecePositionClassName)
     })
   })
+
+  it(`highlight each cell that corresponds to a valid move on the game object`, () => {
+    const gameObject = generateGameObject({
+      validMoves: [
+        [1, 1],
+        [5, 4],
+      ],
+    })
+    render(<Board initialGameObject={gameObject} />)
+    expect(document.getElementById(`board-cell-11`)).toHaveAttribute(
+      `data-is-highlighted`
+    )
+    expect(document.getElementById(`board-cell-54`)).toHaveAttribute(
+      `data-is-highlighted`
+    )
+  })
 })

@@ -1,5 +1,5 @@
-import { BoardPosition, BoardPositionString, Component } from '@/types'
-import { useEffect, useState } from 'react'
+import { BoardPosition, Component } from '@/types'
+import { useEffect } from 'react'
 import { BoardCell } from 'src/compositions/BoardCell'
 // import { resolvePieceMovementRange } from 'src/lib/piece'
 import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'
@@ -11,10 +11,6 @@ export function BoardGrid({
   testId = `board-underlay`,
 }: Props) {
   const [gameObject, dispatch] = useGameObject()
-
-  const [highlightedCells, setHighlightedCells] = useState<
-    BoardPositionString[]
-  >([])
 
   useEffect(() => {
     const { selectedPiece } = gameObject
@@ -38,8 +34,8 @@ export function BoardGrid({
       {gameObject.boardRows.map((row, rowIndex) =>
         row.map(cell => {
           const cellTheme = rowIndex % 2 === 1 ? `odd` : `even`
-          const isHighlighted = highlightedCells.includes(
-            cell.position.join(`,`)
+          const isHighlighted = gameObject.validMoves.some(
+            move => move[0] === cell.position[0] && move[1] === cell.position[1]
           )
 
           return (

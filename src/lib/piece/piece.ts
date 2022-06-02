@@ -1,4 +1,4 @@
-import { Piece, PieceName } from '@/types'
+import { BoardPosition, Piece, PieceName, PlayerColor } from '@/types'
 
 export function generatePieces(): Piece[] {
   return [
@@ -250,7 +250,23 @@ export function resolvePieceDefinition(name: PieceName) {
   return pieceDefinitions.find(p => p.name === name)
 }
 
-export function resolvePieceMovementRange(name: PieceName) {
-  const pieceDefinition = resolvePieceDefinition(name)
-  return pieceDefinition?.movementRange
+export function resolveValidPieceMoves(
+  name: PieceName,
+  player: PlayerColor,
+  position: BoardPosition
+) {
+  const yModifier = player === `black` ? 1 : -1
+
+  const resolvedDefinition = pieceDefinitions.find(piece => piece.name === name)
+
+  const validMoves = resolvedDefinition?.movementRange.map(movementRange => {
+    const [x, y] = position
+    const [top, right, bottom, left] = movementRange
+    const yDistance = (top - bottom) * yModifier
+    const xDistance = right - left
+
+    return [x + xDistance, y + yDistance]
+  })
+
+  return validMoves as BoardPosition[]
 }

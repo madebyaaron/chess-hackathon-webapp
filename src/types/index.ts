@@ -33,12 +33,14 @@ export type PositionAdjustmentAmount =
 // Pieces
 export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
 
+export type PlayerColor = `white` | `black`
+
 export type PieceMovementRange = [number, number, number, number][]
 export interface Piece {
   id: string
   name: PieceName
   position: BoardPosition
-  player: `black` | `white`
+  player: PlayerColor
 }
 
 // Game Object
@@ -47,5 +49,13 @@ export interface GameObject {
   boardRows: BoardRows
   pieces: Piece[]
   selectedPiece?: Piece
-  highlightedCells: BoardPositionString[]
+  validMoves: BoardPosition[]
+}
+
+export interface GameObjectLike {
+  status?: `loading` | `ready`
+  boardRows?: BoardRows
+  pieces?: Piece[]
+  selectedPiece?: Piece
+  validMoves?: BoardPosition[]
 }

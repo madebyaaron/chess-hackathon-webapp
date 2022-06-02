@@ -1,4 +1,5 @@
 import { BoardPosition, GameObject, Piece } from '@/types'
+import { resolveValidPieceMoves } from 'src/lib/piece'
 
 export type ReducerAction =
   | { type: `SELECT`; piece: Piece | undefined }
@@ -9,7 +10,20 @@ export function gameObjectReducer(
   action: ReducerAction
 ): GameObject {
   if (action.type === `SELECT`) {
-    return { ...game, selectedPiece: action.piece }
+    const selectedPiece = action.piece
+
+    if (selectedPiece === undefined) {
+      return { ...game, selectedPiece: undefined, validMoves: [] }
+    }
+
+    const { name, player, position } = selectedPiece
+    const validMoves: BoardPosition[] = resolveValidPieceMoves(
+      name,
+      player,
+      position
+    )
+
+    return { ...game, selectedPiece, validMoves }
   }
 
   if (action.type === `MOVE`) {
@@ -17,7 +31,7 @@ export function gameObjectReducer(
       if (piece === action.piece) return { ...piece, position: action.position }
       return piece
     })
-    return { ...game, pieces: newPieces }
+    return { ...game, pieces: newPieces, validMoves: [] }
   }
 
   return game

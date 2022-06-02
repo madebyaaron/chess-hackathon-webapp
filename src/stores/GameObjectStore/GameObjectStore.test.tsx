@@ -4,7 +4,7 @@ import { BoardPosition } from '@/types'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
-    it(`select action selects a piece when provided`, () => {
+    it(`returns a result containing the provided pieces as selected piece`, () => {
       const game = generateGameObject()
       const selectedPiece = game.pieces[0]
 
@@ -16,7 +16,7 @@ describe(`gameObjectReducer`, () => {
       expect(result.selectedPiece).toEqual(selectedPiece)
     })
 
-    it(`select action deselects a piece when undefined is provided`, () => {
+    it(`returns a result with no selected pieces when no piece is provided`, () => {
       const game = generateGameObject()
       game.selectedPiece = game.pieces[0]
 
@@ -25,6 +25,42 @@ describe(`gameObjectReducer`, () => {
         piece: undefined,
       })
       expect(result.selectedPiece).toEqual(undefined)
+    })
+
+    it(`returns a result containing valid moves when selecting a piece`, () => {
+      const game = generateGameObject()
+      const selectedPiece = game.pieces[0]
+
+      const result = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: selectedPiece,
+      })
+      expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
+    })
+
+    it.skip(`returns a result containing valid pawn moves when selecting a pawn`, () => {
+      const game = generateGameObject()
+      const selectedPawn = game.pieces.find(
+        p => p.name === `pawn` && p.player === `white`
+      )
+
+      const result = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: selectedPawn,
+      })
+
+      const validMoves = [[1, 6]]
+      expect(result.validMoves).toEqual(validMoves)
+    })
+
+    it(`deselecting a piece should set no valid moves in result`, () => {
+      const game = generateGameObject()
+
+      const result = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: undefined,
+      })
+      expect(result.validMoves.length).toEqual(0)
     })
   })
 
@@ -44,6 +80,20 @@ describe(`gameObjectReducer`, () => {
       const updatedPiece = result.pieces[0]
       expect(updatedPiece.position).not.toEqual(oldPosition)
       expect(updatedPiece.position).toEqual(position)
+    })
+
+    it(`moving a piece should set no valid moves in result`, () => {
+      const game = generateGameObject()
+      const piece = game.pieces[0]
+
+      const position: BoardPosition = [1, 2]
+      const result = gameObjectReducer(game, {
+        type: `MOVE`,
+        piece,
+        position,
+      })
+
+      expect(result.validMoves.length).toEqual(0)
     })
   })
 })

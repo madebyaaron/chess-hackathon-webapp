@@ -1,7 +1,7 @@
 import {
   generatePieces,
   resolvePieceDefinition,
-  resolvePieceMovementRange,
+  resolveValidPieceMoves,
 } from '.'
 
 describe(`generate pieces`, () => {
@@ -35,9 +35,9 @@ describe(`resolvePieceDefinition`, () => {
   })
 })
 
-describe(`resolvePieceMovementRange`, () => {
-  it(`returns the movement range for the provided piece name`, () => {
-    const resolvedMovementRange = resolvePieceMovementRange(`pawn`)
-    expect(resolvedMovementRange).toEqual([[1, 0, 0, 0]])
+describe(`resolveValidPieceMoves`, () => {
+  it(`returns all valid moves for the piece and player color provided`, () => {
+    expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2])).toEqual([[1, 3]])
+    expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7])).toEqual([[1, 6]])
   })
 })
