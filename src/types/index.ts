@@ -44,6 +44,23 @@ export interface Piece {
   history: BoardPosition[]
 }
 
+export type UpDistance = number
+export type RightDistance = number
+export type BottomDistance = number
+export type LeftDistance = number
+
+export type MovementRange = [
+  UpDistance,
+  RightDistance,
+  BottomDistance,
+  LeftDistance
+][]
+
+export interface PieceDefinitions {
+  name: PieceName
+  movementRange: MovementRange
+}
+
 // Game Object
 export interface GameObject {
   status: `loading` | `ready`
