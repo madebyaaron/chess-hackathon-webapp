@@ -80,5 +80,21 @@ describe(`gameObjectReducer`, () => {
 
       expect(result.validMoves.length).toEqual(0)
     })
+
+    it(`moving a piece add state to its history`, () => {
+      const game = generateGameObject()
+      const piece = game.pieces[0]
+
+      const position: BoardPosition = [1, 2]
+      const result = gameObjectReducer(game, {
+        type: `MOVE`,
+        piece,
+        position,
+      })
+      expect(result.history).toEqual([
+        [1, 1],
+        [1, 2],
+      ])
+    })
   })
 })

@@ -51,13 +51,3 @@ export function generateBoard(): BoardRows {
 
   return augmentedRows
 }
-
-// export function calculateTraversableCellPositions(
-//   currentPosition: BoardPosition,
-//   movementRange: PieceMovementRange,
-//   gameObject: GameObject
-// ) {
-//   const traversableCellPositions = movementRange.map(rangeItem => {
-//     //
-//   })
-// }
