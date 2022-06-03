@@ -6,11 +6,7 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "plugins": [
-    "prettier",
-    "@typescript-eslint",
-    "unused-imports"
-  ],
+  "plugins": ["prettier", "@typescript-eslint", "unused-imports"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -34,7 +30,7 @@
     "import/no-cycle": 0,
     "react/jsx-pascal-case": 0,
     "react/destructuring-assignment": 0,
-    "no-console":["error", { "allow": ["warn", "error", "info"] }],
+    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "react/no-unescaped-entities": 0,
     "@typescript-eslint/no-var-requires": 0,
     "quotes": ["error", "backtick"],
@@ -45,7 +41,8 @@
         "devDependencies": true
       }
     ],
-    "no-nested-ternary": 0
+    "no-nested-ternary": 0,
+    "prettier/prettier": 0
   },
   "ignorePatterns": ["/next/.next", "/next/out"]
 }
