@@ -11,19 +11,20 @@ export function gameObjectReducer(
 ): GameObject {
   if (action.type === `SELECT`) {
     const selectedPiece = action.piece
+    const isPieceSelected = selectedPiece !== undefined
 
-    if (selectedPiece === undefined) {
+    if (!isPieceSelected) {
       return { ...game, selectedPiece: undefined, validMoves: [] }
     }
 
     const { name, player, position } = selectedPiece
-    const validMoves: BoardPosition[] = resolveValidPieceMoves(
+    const showValidMoves: BoardPosition[] = resolveValidPieceMoves(
       name,
       player,
       position
     )
 
-    return { ...game, selectedPiece, validMoves }
+    return { ...game, selectedPiece, validMoves: showValidMoves }
   }
 
   if (action.type === `MOVE`) {
@@ -41,17 +42,22 @@ export function gameObjectReducer(
 
     if (!isValidMove) return game
 
-    const newPieces = game.pieces.map(piece => {
+    const updatedBoardPosition = game.pieces.map(piece => {
       const updatedPiece = { ...piece, position: action.position }
-      return piece === selectedPiece
+      const updatePieceMoveHistory = {
+        history: [...updatedPiece.history, action.position],
+      }
+      const hasMoved = piece === selectedPiece
+
+      return hasMoved
         ? {
             ...updatedPiece,
-            history: [...updatedPiece.history, action.position],
+            ...updatePieceMoveHistory,
           }
         : piece
     })
 
-    return { ...game, pieces: newPieces, validMoves: [] }
+    return { ...game, pieces: updatedBoardPosition, validMoves: [] }
   }
 
   return game
