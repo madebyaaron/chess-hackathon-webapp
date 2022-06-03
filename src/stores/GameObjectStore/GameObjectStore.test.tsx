@@ -1,6 +1,6 @@
 import { generateGameObject } from 'src/lib/game'
 import { gameObjectReducer } from './GameObject.reducer'
-import { BoardPosition, Piece } from '@/types'
+import { BoardPosition } from '@/types'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
@@ -36,6 +36,20 @@ describe(`gameObjectReducer`, () => {
         piece: selectedPiece,
       })
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
+    })
+
+    it(`returns a result of allowing a pawn to optionally move forward 2 spaces if it is the pawn's first move`, () => {
+      const game = generateGameObject()
+      const leftWhitePawn = game.pieces[8]
+
+      const result = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: leftWhitePawn,
+      })
+      expect(result.validMoves).toEqual([
+        [1, 6],
+        [1, 5],
+      ])
     })
 
     it(`deselecting a piece should set no valid moves in result`, () => {
