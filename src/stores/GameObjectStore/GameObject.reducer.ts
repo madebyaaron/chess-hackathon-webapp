@@ -9,7 +9,10 @@ export function gameObjectReducer(
   game: GameObject,
   action: ReducerAction
 ): GameObject {
-  if (action.type === `SELECT`) {
+  const CHESS_PIECE_IS_SELECTED = action.type === `SELECT`
+  const CHESS_PIECE_IS_MOVED = action.type === `MOVE`
+
+  if (CHESS_PIECE_IS_SELECTED) {
     const selectedPiece = action.piece
     const isPieceSelected = selectedPiece !== undefined
 
@@ -27,7 +30,7 @@ export function gameObjectReducer(
     return { ...game, selectedPiece, validMoves: showValidMoves }
   }
 
-  if (action.type === `MOVE`) {
+  if (CHESS_PIECE_IS_MOVED) {
     // can unit move
     const selectedPiece = action.piece
     const { name, player, position } = selectedPiece

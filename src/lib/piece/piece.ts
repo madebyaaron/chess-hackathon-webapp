@@ -6,7 +6,9 @@ import {
   PlayerColor,
   PieceDefinitions,
 } from '@/types'
+
 import {
+  pawnMovementRange,
   knightMovementRange,
   kingMovementRange,
   rookMovementRange,
@@ -21,7 +23,7 @@ export function generatePieces(): Piece[] {
 const pieceDefinitions: PieceDefinitions[] = [
   {
     name: `pawn`,
-    movementRange: [[1, 0, 0, 0]],
+    movementRange: pawnMovementRange,
   },
   {
     name: `knight`,
