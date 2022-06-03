@@ -1,7 +1,5 @@
 import { BoardPosition, Component } from '@/types'
-import { useEffect } from 'react'
 import { BoardCell } from 'src/compositions/BoardCell'
-// import { resolvePieceMovementRange } from 'src/lib/piece'
 import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'
 
 interface Props extends Component {}
@@ -11,15 +9,6 @@ export function BoardGrid({
   testId = `board-underlay`,
 }: Props) {
   const [gameObject, dispatch] = useGameObject()
-
-  useEffect(() => {
-    const { selectedPiece } = gameObject
-    if (selectedPiece) {
-      // const selectedPiecePosition = selectedPiece.position
-      // const movementRange = resolvePieceMovementRange(selectedPiece.name)
-      // const traversableCellPositionStrings = calculateTraversableCellPositions()
-    }
-  }, [gameObject?.selectedPiece])
 
   function handleCellClick(position: BoardPosition) {
     const piece = gameObject.selectedPiece

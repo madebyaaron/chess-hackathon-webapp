@@ -43,7 +43,12 @@ export function gameObjectReducer(
 
     const newPieces = game.pieces.map(piece => {
       const updatedPiece = { ...piece, position: action.position }
-      return piece === selectedPiece ? updatedPiece : piece
+      return piece === selectedPiece
+        ? {
+            ...updatedPiece,
+            history: [...updatedPiece.history, action.position],
+          }
+        : piece
     })
 
     return { ...game, pieces: newPieces, validMoves: [] }

@@ -41,6 +41,7 @@ export interface Piece {
   name: PieceName
   position: BoardPosition
   player: PlayerColor
+  history: BoardPosition[]
 }
 
 // Game Object
