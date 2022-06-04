@@ -2,8 +2,6 @@ import {
   BoardRows,
   BoardPosition,
   BoardCell,
-  // PieceMovementRange,
-  // GameObject,
 } from '@/types'
 
 const gridColumnClassNames = {

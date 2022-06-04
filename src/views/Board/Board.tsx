@@ -1,6 +1,5 @@
 import { Component, GameObject } from '@/types'
 import { GameObjectProvider } from 'src/stores/GameObjectStore/GameObjectStore'
-// import { resolveGridPositionClassNameFromBoardPosition } from 'src/lib/board'
 import { BoardPieces } from './Board.Pieces'
 import { BoardGrid } from './Board.Grid'
 
