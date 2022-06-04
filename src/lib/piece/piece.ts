@@ -1,3 +1,4 @@
+import { firstMovePawnMovementRange } from './../../constants/movementRanges'
 import { piecesInitialState } from './../../constants/piecesInitialState'
 import {
   BoardPosition,
@@ -54,11 +55,16 @@ export function resolvePieceDefinition(name: PieceName) {
 export function resolveValidPieceMoves(
   name: PieceName,
   player: PlayerColor,
-  position: BoardPosition
+  position: BoardPosition,
+  history: BoardPosition[]
 ) {
   const yModifier = player === `black` ? 1 : -1
 
-  const resolvedDefinition = pieceDefinitions.find(piece => piece.name === name)
+  const resolvedDefinition = pieceDefinitions.find(piece => {
+    if (name === `pawn` && history.length === 1)
+      return firstMovePawnMovementRange
+    return piece.name === name
+  })
 
   const validMoves = resolvedDefinition?.movementRange.map(movementRange => {
     const [x, y] = position
@@ -76,9 +82,15 @@ export function ensureNewPositionIsValid(
   name: PieceName,
   player: PlayerColor,
   currentPosition: BoardPosition,
-  newPosition: BoardPosition
+  newPosition: BoardPosition,
+  history: BoardPosition[]
 ) {
-  const validPieceMoves = resolveValidPieceMoves(name, player, currentPosition)
+  const validPieceMoves = resolveValidPieceMoves(
+    name,
+    player,
+    currentPosition,
+    history
+  )
   const doesValidMovesIncludeNewPosition = validPieceMoves.some(
     move => move[0] === newPosition[0] && move[1] === newPosition[1]
   )

@@ -1,4 +1,4 @@
-import { BoardPosition, BoardPositionNode, GameObject, Piece } from '@/types'
+import { BoardPosition, GameObject, Piece } from '@/types'
 import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
 
 export type ReducerAction =
@@ -24,19 +24,15 @@ export function gameObjectReducer(
     const validMoves: BoardPosition[] = resolveValidPieceMoves(
       name,
       player,
-      position
+      position,
+      history
     )
 
     const isPawnsFirstMove =
       selectedPiece.name === `pawn` && history.length === 1
 
-    const extraYCellPosition = (validMoves[0][1] - 1) as BoardPositionNode
-    const pawnFirstValidMoves = [
-      validMoves[0],
-      [validMoves[0][0], extraYCellPosition],
-    ] as BoardPosition[]
     const updatedValidMoves = isPawnsFirstMove
-      ? pawnFirstValidMoves
+      ? adjustPawnValidMovesIfFirstMove(validMoves, selectedPiece)
       : validMoves
 
     return {
@@ -49,14 +45,15 @@ export function gameObjectReducer(
   if (CHESS_PIECE_IS_MOVED) {
     // can unit move
     const selectedPiece = action.piece
-    const { name, player, position } = selectedPiece
+    const { name, player, position, history } = selectedPiece
     const targetPosition = action.position
 
     const isValidMove = ensureNewPositionIsValid(
       name,
       player,
       position,
-      targetPosition
+      targetPosition,
+      history
     )
 
     if (!isValidMove) return game
@@ -80,4 +77,21 @@ export function gameObjectReducer(
   }
 
   return game
+}
+
+function adjustPawnValidMovesIfFirstMove(
+  validMoves: BoardPosition[],
+  selectedPiece: Piece
+): BoardPosition[] {
+  const extraYCellPosition =
+    selectedPiece.player === `black`
+      ? validMoves[0][1] + 1
+      : validMoves[0][1] - 1
+
+  const pawnFirstValidMoves = [
+    validMoves[0],
+    [validMoves[0][0], extraYCellPosition],
+  ] as BoardPosition[]
+
+  return pawnFirstValidMoves
 }

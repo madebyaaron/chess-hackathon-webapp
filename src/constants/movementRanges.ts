@@ -1,6 +1,10 @@
 import { MovementRange } from '@/types'
 
 export const pawnMovementRange = [[1, 0, 0, 0]] as MovementRange
+export const firstMovePawnMovementRange = [
+  [1, 0, 0, 0],
+  [2, 0, 0, 0],
+] as MovementRange
 
 export const knightMovementRange = [
   [2, 1, 0, 0],

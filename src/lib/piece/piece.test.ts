@@ -51,8 +51,8 @@ describe(`generate pieces`, () => {
 describe(`resolvePieceDefinition`, () => {
   it(`returns the definition matching the provided name`, () => {
     expect(resolvePieceDefinition(`pawn`)).toEqual({
-      name: `pawn`,
       movementRange: [[1, 0, 0, 0]],
+      name: `pawn`,
     })
 
     expect(resolvePieceDefinition(`rook`)).toEqual({
@@ -217,8 +217,21 @@ describe(`resolvePieceDefinition`, () => {
 
 describe(`resolveValidPieceMoves`, () => {
   it(`returns all valid moves for the piece and player color provided`, () => {
-    expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2])).toEqual([[1, 3]])
+    expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2], [])).toEqual([
+      [1, 3],
+    ])
 
-    expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7])).toEqual([[1, 6]])
+    expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7], [])).toEqual([
+      [1, 6],
+    ])
+  })
+  it(`returns valid moves for pawns if they have yet to be moved previously`, () => {
+    expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2], [[1, 2]])).toEqual([
+      [1, 3],
+    ])
+
+    expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7], [[1, 7]])).toEqual([
+      [1, 6],
+    ])
   })
 })
