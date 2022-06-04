@@ -32,7 +32,7 @@ export function gameObjectReducer(
       selectedPiece.name === `pawn` && history.length === 1
 
     const updatedValidMoves = isPawnsFirstMove
-      ? adjustPawnValidMovesIfFirstMove(validMoves, selectedPiece)
+      ? adjustPawnValidMovesIfFirstMove(selectedPiece, validMoves)
       : validMoves
 
     return {
@@ -43,7 +43,6 @@ export function gameObjectReducer(
   }
 
   if (CHESS_PIECE_IS_MOVED) {
-    // can unit move
     const selectedPiece = action.piece
     const { name, player, position, history } = selectedPiece
     const targetPosition = action.position
@@ -79,9 +78,9 @@ export function gameObjectReducer(
   return game
 }
 
-function adjustPawnValidMovesIfFirstMove(
-  validMoves: BoardPosition[],
-  selectedPiece: Piece
+export function adjustPawnValidMovesIfFirstMove(
+  selectedPiece: Piece,
+  validMoves: BoardPosition[]
 ): BoardPosition[] {
   const extraYCellPosition =
     selectedPiece.player === `black`

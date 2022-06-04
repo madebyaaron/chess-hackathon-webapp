@@ -1,6 +1,7 @@
 import { generateGameObject } from 'src/lib/game'
 import { gameObjectReducer } from './GameObject.reducer'
-import { BoardPosition } from '@/types'
+import { BoardPosition, Piece } from '@/types'
+import { adjustPawnValidMovesIfFirstMove } from './GameObject.reducer'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
@@ -45,6 +46,43 @@ describe(`gameObjectReducer`, () => {
         piece: undefined,
       })
       expect(result.validMoves.length).toEqual(0)
+    })
+
+    it(`adjusts white pawn valid moves if it is the first move`, () => {
+      const game = generateGameObject()
+      const leftWhitePawn = game.pieces[8]
+
+      const selectedPiece = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: leftWhitePawn,
+      })
+
+      const piece = selectedPiece.selectedPiece as Piece
+      const validMoves = selectedPiece.validMoves
+      const result = adjustPawnValidMovesIfFirstMove(piece, validMoves)
+
+      expect(result).toEqual([
+        [1, 6],
+        [1, 5],
+      ])
+    })
+
+    it(`adjusts black pawn valid moves if it is the first move`, () => {
+      const game = generateGameObject()
+      const leftBlackPawn = game.pieces[16]
+      const selectedPiece = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: leftBlackPawn,
+      })
+
+      const piece = selectedPiece.selectedPiece as Piece
+      const validMoves = selectedPiece.validMoves
+      const result = adjustPawnValidMovesIfFirstMove(piece, validMoves)
+
+      expect(result).toEqual([
+        [1, 3],
+        [1, 4],
+      ])
     })
   })
 
