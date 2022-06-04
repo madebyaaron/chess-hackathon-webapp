@@ -1,3 +1,4 @@
+import { BoardPosition } from '@/types'
 import {
   generatePieces,
   resolvePieceDefinition,
@@ -213,25 +214,72 @@ describe(`resolvePieceDefinition`, () => {
       ],
     })
   })
+
+  it(`returns the alternative pawn definition for when it is the pawn's first move`, () => {
+    expect(resolvePieceDefinition(`pawn-first-move`)).toEqual({
+      movementRange: [
+        [1, 0, 0, 0],
+        [2, 0, 0, 0],
+      ],
+      name: `pawn-first-move`,
+    })
+  })
 })
 
 describe(`resolveValidPieceMoves`, () => {
   it(`returns all valid moves for the piece and player color provided`, () => {
-    expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2], [])).toEqual([
-      [1, 3],
-    ])
+    const emptyHistoryToVitoPawnFirstMoveOptions: BoardPosition[] = []
+    expect(
+      resolveValidPieceMoves(
+        `pawn`,
+        `black`,
+        [1, 2],
+        emptyHistoryToVitoPawnFirstMoveOptions
+      )
+    ).toEqual([[1, 3]])
 
-    expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7], [])).toEqual([
-      [1, 6],
+    expect(
+      resolveValidPieceMoves(
+        `pawn`,
+        `white`,
+        [1, 7],
+        emptyHistoryToVitoPawnFirstMoveOptions
+      )
+    ).toEqual([[1, 6]])
+    expect(resolveValidPieceMoves(`king`, `white`, [4, 8], [[4, 8]])).toEqual([
+      [4, 7],
+      [5, 7],
+      [5, 8],
+      [5, 9],
+      [4, 9],
+      [3, 9],
+      [3, 8],
+      [3, 7],
     ])
+    expect(resolveValidPieceMoves(`knight`, `black`, [2, 1], [[2, 1]])).toEqual(
+      [
+        [3, 3],
+        [1, 3],
+        [4, 2],
+        [0, 2],
+        [3, -1],
+        [1, -1],
+        [4, 0],
+        [0, 0],
+      ]
+    )
   })
-  it(`returns valid moves for pawns if they have yet to be moved previously`, () => {
+
+  it(`returns valid moves for black pawns if they have not had a move yet`, () => {
     expect(resolveValidPieceMoves(`pawn`, `black`, [1, 2], [[1, 2]])).toEqual([
       [1, 3],
+      [1, 4],
     ])
-
+  })
+  it(`returns valid moves for white pawns if they have not had a move yet`, () => {
     expect(resolveValidPieceMoves(`pawn`, `white`, [1, 7], [[1, 7]])).toEqual([
       [1, 6],
+      [1, 5],
     ])
   })
 })
