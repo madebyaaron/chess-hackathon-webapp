@@ -19,11 +19,11 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) {
     e.stopPropagation()
-    const isSelectedAChessPiece = piece === gameObject?.selectedPiece
+    const isAChessPieceSelected = piece === gameObject.selectedPiece
 
-    isSelectedAChessPiece
-      ? dispatch({ type: `SELECT`, piece })
-      : dispatch({ type: `SELECT`, piece: undefined })
+    return isAChessPieceSelected
+      ? dispatch({ type: `SELECT`, piece: undefined })
+      : dispatch({ type: `SELECT`, piece })
   }
 
   const variants = {

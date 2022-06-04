@@ -29,11 +29,10 @@ describe(`gameObjectReducer`, () => {
 
     it(`returns a result containing valid moves when selecting a piece`, () => {
       const game = generateGameObject()
-      const selectedPiece = game.pieces[0]
-
+      const blackLeftRook = game.pieces[0]
       const result = gameObjectReducer(game, {
         type: `SELECT`,
-        piece: selectedPiece,
+        piece: blackLeftRook,
       })
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
     })
