@@ -31,7 +31,14 @@ export type PositionAdjustmentAmount =
   | 7
 
 // Pieces
-export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
+export type PieceName =
+  | `pawn`
+  | `knight`
+  | `bishop`
+  | `rook`
+  | `queen`
+  | `king`
+  | `pawn-first-move`
 
 export type PlayerColor = `white` | `black`
 

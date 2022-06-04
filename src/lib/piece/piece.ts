@@ -23,6 +23,10 @@ export function generatePieces(): Piece[] {
 
 const pieceDefinitions: PieceDefinitions[] = [
   {
+    name: `pawn-first-move`,
+    movementRange: firstMovePawnMovementRange,
+  },
+  {
     name: `pawn`,
     movementRange: pawnMovementRange,
   },
@@ -62,7 +66,11 @@ export function resolveValidPieceMoves(
 
   const resolvedDefinition = pieceDefinitions.find(piece => {
     if (name === `pawn` && history.length === 1)
-      return firstMovePawnMovementRange
+      return {
+        name: `pawn-first-move`,
+        movementRange: firstMovePawnMovementRange,
+      }
+
     return piece.name === name
   })
 
