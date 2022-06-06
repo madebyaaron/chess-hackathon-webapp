@@ -28,7 +28,7 @@ export function BoardGrid({
 
   return (
     <div
-      className={`grid grid-cols-8 shadow-xl/.5 ${className}`}
+      className={`grid grid-cols-8 shadow-xl ${className}`}
       data-testid={testId}
     >
       {gameObject.boardRows.map((row, rowIndex) =>
