@@ -31,7 +31,14 @@ export type PositionAdjustmentAmount =
   | 7
 
 // Pieces
-export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
+export type PieceName =
+  | `pawn`
+  | `knight`
+  | `bishop`
+  | `rook`
+  | `queen`
+  | `king`
+  | `pawn-first-move`
 
 export type PlayerColor = `white` | `black`
 
@@ -41,6 +48,24 @@ export interface Piece {
   name: PieceName
   position: BoardPosition
   player: PlayerColor
+  history: BoardPosition[]
+}
+
+export type UpDistance = number
+export type RightDistance = number
+export type BottomDistance = number
+export type LeftDistance = number
+
+export type MovementRange = [
+  UpDistance,
+  RightDistance,
+  BottomDistance,
+  LeftDistance
+][]
+
+export interface PieceDefinitions {
+  name: PieceName
+  movementRange: MovementRange
 }
 
 // Game Object

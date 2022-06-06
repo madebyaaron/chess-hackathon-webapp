@@ -9,45 +9,88 @@ export function gameObjectReducer(
   game: GameObject,
   action: ReducerAction
 ): GameObject {
-  if (action.type === `SELECT`) {
-    const selectedPiece = action.piece
+  const CHESS_PIECE_IS_SELECTED = action.type === `SELECT`
+  const CHESS_PIECE_IS_MOVED = action.type === `MOVE`
 
-    if (selectedPiece === undefined) {
+  if (CHESS_PIECE_IS_SELECTED) {
+    const selectedPiece = action.piece
+    const isPieceSelected = selectedPiece !== undefined
+
+    if (!isPieceSelected) {
       return { ...game, selectedPiece: undefined, validMoves: [] }
     }
 
-    const { name, player, position } = selectedPiece
+    const { name, player, position, history } = selectedPiece
     const validMoves: BoardPosition[] = resolveValidPieceMoves(
       name,
       player,
-      position
+      position,
+      history
     )
 
-    return { ...game, selectedPiece, validMoves }
+    const isPawnsFirstMove =
+      selectedPiece.name === `pawn` && history.length === 1
+
+    const updatedValidMoves = isPawnsFirstMove
+      ? adjustPawnValidMovesIfFirstMove(selectedPiece, validMoves)
+      : validMoves
+
+    return {
+      ...game,
+      selectedPiece,
+      validMoves: updatedValidMoves,
+    } as GameObject
   }
 
-  if (action.type === `MOVE`) {
-    // can unit move
+  if (CHESS_PIECE_IS_MOVED) {
     const selectedPiece = action.piece
-    const { name, player, position } = selectedPiece
+    const { name, player, position, history } = selectedPiece
     const targetPosition = action.position
 
     const isValidMove = ensureNewPositionIsValid(
       name,
       player,
       position,
-      targetPosition
+      targetPosition,
+      history
     )
 
     if (!isValidMove) return game
 
-    const newPieces = game.pieces.map(piece => {
+    const updatedBoardPosition = game.pieces.map(piece => {
       const updatedPiece = { ...piece, position: action.position }
-      return piece === selectedPiece ? updatedPiece : piece
+      const updatePieceMoveHistory = {
+        history: [...updatedPiece.history, action.position],
+      }
+      const hasMoved = piece === selectedPiece
+
+      return hasMoved
+        ? {
+            ...updatedPiece,
+            ...updatePieceMoveHistory,
+          }
+        : piece
     })
 
-    return { ...game, pieces: newPieces, validMoves: [] }
+    return { ...game, pieces: updatedBoardPosition, validMoves: [] }
   }
 
   return game
+}
+
+export function adjustPawnValidMovesIfFirstMove(
+  selectedPiece: Piece,
+  validMoves: BoardPosition[]
+): BoardPosition[] {
+  const extraYCellPosition =
+    selectedPiece.player === `black`
+      ? validMoves[0][1] + 1
+      : validMoves[0][1] - 1
+
+  const pawnFirstValidMoves = [
+    validMoves[0],
+    [validMoves[0][0], extraYCellPosition],
+  ] as BoardPosition[]
+
+  return pawnFirstValidMoves
 }
