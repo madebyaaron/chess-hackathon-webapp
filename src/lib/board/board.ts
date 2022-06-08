@@ -1,8 +1,4 @@
-import {
-  BoardRows,
-  BoardPosition,
-  BoardCell,
-} from '@/types'
+import { BoardRows, BoardPosition, BoardCell } from '@/types'
 
 const gridColumnClassNames = {
   1: `col-start-1`,
