@@ -41,8 +41,7 @@
         "devDependencies": true
       }
     ],
-    "no-nested-ternary": 0,
-    "prettier/prettier": 0
+    "no-nested-ternary": 0
   },
   "ignorePatterns": ["/next/.next", "/next/out"]
 }

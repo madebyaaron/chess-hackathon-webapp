@@ -1,12 +1,18 @@
-import { MovementRange } from '@/types'
+import { AttackRange, MovementRange } from '@/types'
 
-export const pawnMovementRange = [[1, 0, 0, 0]] as MovementRange
-export const firstMovePawnMovementRange = [
+export const blackPawnMovementRange = [[1, 0, 0, 0]] as MovementRange
+
+export const blackPawnAttackRange: MovementRange = [
+  [1, 1, 0, 0],
+  [1, 0, 0, 1],
+] as AttackRange
+
+export const blackPawnInitialMovementRange = [
   [1, 0, 0, 0],
   [2, 0, 0, 0],
 ] as MovementRange
 
-export const knightMovementRange = [
+export const blackKnightMovementRange = [
   [2, 1, 0, 0],
   [2, 0, 0, 1],
   [1, 2, 0, 0],
@@ -17,7 +23,7 @@ export const knightMovementRange = [
   [0, 0, 1, 2],
 ] as MovementRange
 
-export const kingMovementRange = [
+export const blackKingMovementRange = [
   [1, 0, 0, 0],
   [1, 1, 0, 0],
   [0, 1, 0, 0],
@@ -28,7 +34,7 @@ export const kingMovementRange = [
   [1, 0, 0, 1],
 ] as MovementRange
 
-export const rookMovementRange = [
+export const blackRookMovementRange = [
   [1, 0, 0, 0],
   [2, 0, 0, 0],
   [3, 0, 0, 0],
@@ -59,7 +65,7 @@ export const rookMovementRange = [
   [0, 0, 0, 7],
 ] as MovementRange
 
-export const bishopMovementRange = [
+export const blackBishopMovementRange = [
   [1, 1, 0, 0],
   [2, 2, 0, 0],
   [3, 3, 0, 0],
@@ -90,7 +96,7 @@ export const bishopMovementRange = [
   [7, 0, 0, 7],
 ] as MovementRange
 
-export const queenMovementRange = [
+export const blackQueenMovementRange = [
   [1, 1, 0, 0],
   [2, 2, 0, 0],
   [3, 3, 0, 0],
@@ -140,6 +146,161 @@ export const queenMovementRange = [
   [0, 0, 5, 0],
   [0, 0, 6, 0],
   [0, 0, 7, 0],
+  [0, 0, 0, 1],
+  [0, 0, 0, 2],
+  [0, 0, 0, 3],
+  [0, 0, 0, 4],
+  [0, 0, 0, 5],
+  [0, 0, 0, 6],
+  [0, 0, 0, 7],
+] as MovementRange
+
+export const whitePawnMovementRange = [[0, 0, 1, 0]] as MovementRange
+
+export const whitePawnInitialMovementRange = [
+  [0, 0, 1, 0],
+  [0, 0, 2, 0],
+] as MovementRange
+
+export const whitePawnAttackRange = [
+  [0, 1, 1, 0],
+  [0, 0, 1, 1],
+] as AttackRange
+
+export const whiteKnightMovementRange = [
+  [0, 1, 2, 0],
+  [0, 0, 2, 1],
+  [0, 2, 1, 0],
+  [0, 0, 1, 2],
+  [2, 1, 0, 0],
+  [2, 0, 0, 1],
+  [1, 2, 0, 0],
+  [1, 0, 0, 2],
+] as MovementRange
+
+export const whiteKingMovementRange = [
+  [0, 0, 1, 0],
+  [0, 1, 1, 0],
+  [0, 1, 0, 0],
+  [1, 1, 0, 0],
+  [1, 0, 0, 0],
+  [1, 0, 0, 1],
+  [0, 0, 0, 1],
+  [0, 0, 1, 1],
+] as MovementRange
+
+export const whiteRookMovementRange = [
+  [0, 0, 1, 0],
+  [0, 0, 2, 0],
+  [0, 0, 3, 0],
+  [0, 0, 4, 0],
+  [0, 0, 5, 0],
+  [0, 0, 6, 0],
+  [0, 0, 7, 0],
+  [0, 1, 0, 0],
+  [0, 2, 0, 0],
+  [0, 3, 0, 0],
+  [0, 4, 0, 0],
+  [0, 5, 0, 0],
+  [0, 6, 0, 0],
+  [0, 7, 0, 0],
+  [1, 0, 0, 0],
+  [2, 0, 0, 0],
+  [3, 0, 0, 0],
+  [4, 0, 0, 0],
+  [5, 0, 0, 0],
+  [6, 0, 0, 0],
+  [7, 0, 0, 0],
+  [0, 0, 0, 1],
+  [0, 0, 0, 2],
+  [0, 0, 0, 3],
+  [0, 0, 0, 4],
+  [0, 0, 0, 5],
+  [0, 0, 0, 6],
+  [0, 0, 0, 7],
+] as MovementRange
+
+export const whiteBishopMovementRange = [
+  [0, 1, 1, 0],
+  [0, 2, 2, 0],
+  [0, 3, 3, 0],
+  [0, 4, 4, 0],
+  [0, 5, 5, 0],
+  [0, 6, 6, 0],
+  [0, 7, 7, 0],
+  [1, 1, 0, 0],
+  [2, 2, 0, 0],
+  [3, 3, 0, 0],
+  [4, 4, 0, 0],
+  [5, 5, 0, 0],
+  [6, 6, 0, 0],
+  [7, 7, 0, 0],
+  [1, 0, 0, 1],
+  [2, 0, 0, 2],
+  [3, 0, 0, 3],
+  [4, 0, 0, 4],
+  [5, 0, 0, 5],
+  [6, 0, 0, 6],
+  [7, 0, 0, 7],
+  [0, 0, 1, 1],
+  [0, 0, 2, 2],
+  [0, 0, 3, 3],
+  [0, 0, 4, 4],
+  [0, 0, 5, 5],
+  [0, 0, 6, 6],
+  [0, 0, 7, 7],
+] as MovementRange
+
+export const whiteQueenMovementRange = [
+  [0, 1, 1, 0],
+  [0, 2, 2, 0],
+  [0, 3, 3, 0],
+  [0, 4, 4, 0],
+  [0, 5, 5, 0],
+  [0, 6, 6, 0],
+  [0, 7, 7, 0],
+  [1, 1, 0, 0],
+  [2, 2, 0, 0],
+  [3, 3, 0, 0],
+  [4, 4, 0, 0],
+  [5, 5, 0, 0],
+  [6, 6, 0, 0],
+  [7, 7, 0, 0],
+  [1, 0, 0, 1],
+  [2, 0, 0, 2],
+  [3, 0, 0, 3],
+  [4, 0, 0, 4],
+  [5, 0, 0, 5],
+  [6, 0, 0, 6],
+  [7, 0, 0, 7],
+  [0, 0, 1, 1],
+  [0, 0, 2, 2],
+  [0, 0, 3, 3],
+  [0, 0, 4, 4],
+  [0, 0, 5, 5],
+  [0, 0, 6, 6],
+  [0, 0, 7, 7],
+  [0, 0, 1, 0],
+  [0, 0, 2, 0],
+  [0, 0, 3, 0],
+  [0, 0, 4, 0],
+  [0, 0, 5, 0],
+  [0, 0, 6, 0],
+  [0, 0, 7, 0],
+  [0, 1, 0, 0],
+  [0, 2, 0, 0],
+  [0, 3, 0, 0],
+  [0, 4, 0, 0],
+  [0, 5, 0, 0],
+  [0, 6, 0, 0],
+  [0, 7, 0, 0],
+  [1, 0, 0, 0],
+  [2, 0, 0, 0],
+  [3, 0, 0, 0],
+  [4, 0, 0, 0],
+  [5, 0, 0, 0],
+  [6, 0, 0, 0],
+  [7, 0, 0, 0],
   [0, 0, 0, 1],
   [0, 0, 0, 2],
   [0, 0, 0, 3],

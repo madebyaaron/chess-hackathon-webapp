@@ -47,6 +47,9 @@ export interface Piece {
   id: string
   name: PieceName
   position: BoardPosition
+  movementRange: MovementRange
+  initialMovementRange: MovementRange
+  attackRange: AttackRange
   player: PlayerColor
   history: BoardPosition[]
 }
@@ -57,6 +60,13 @@ export type BottomDistance = number
 export type LeftDistance = number
 
 export type MovementRange = [
+  UpDistance,
+  RightDistance,
+  BottomDistance,
+  LeftDistance
+][]
+
+export type AttackRange = [
   UpDistance,
   RightDistance,
   BottomDistance,

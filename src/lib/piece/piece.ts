@@ -1,85 +1,20 @@
-import { firstMovePawnMovementRange } from './../../constants/movementRanges'
 import { piecesInitialState } from './../../constants/piecesInitialState'
-import {
-  BoardPosition,
-  Piece,
-  PieceName,
-  PlayerColor,
-  PieceDefinitions,
-} from '@/types'
-
-import {
-  pawnMovementRange,
-  knightMovementRange,
-  kingMovementRange,
-  rookMovementRange,
-  bishopMovementRange,
-  queenMovementRange,
-} from 'src/constants/movementRanges'
+import { BoardPosition, Piece } from '@/types'
 
 export function generatePieces(): Piece[] {
   return piecesInitialState
 }
 
-const pieceDefinitions: PieceDefinitions[] = [
-  {
-    name: `pawn-first-move`,
-    movementRange: firstMovePawnMovementRange,
-  },
-  {
-    name: `pawn`,
-    movementRange: pawnMovementRange,
-  },
-  {
-    name: `knight`,
-    movementRange: knightMovementRange,
-  },
-  {
-    name: `king`,
-    movementRange: kingMovementRange,
-  },
-  {
-    name: `rook`,
-    movementRange: rookMovementRange,
-  },
-  {
-    name: `bishop`,
-    movementRange: bishopMovementRange,
-  },
-  {
-    name: `queen`,
-    movementRange: queenMovementRange,
-  },
-]
-
-export function resolvePieceDefinition(name: PieceName) {
-  return pieceDefinitions.find(p => p.name === name)
-}
-
-export function resolveValidPieceMoves(
-  name: PieceName,
-  player: PlayerColor,
-  position: BoardPosition,
-  history: BoardPosition[]
-) {
-  const yModifier = player === `black` ? 1 : -1
-
-  const resolvedDefinition = pieceDefinitions.find(piece => {
-    if (name === `pawn` && history.length === 1)
-      return {
-        name: `pawn-first-move`,
-        movementRange: firstMovePawnMovementRange,
-      }
-
-    return piece.name === name
-  })
-
-  const validMoves = resolvedDefinition?.movementRange.map(movementRange => {
-    const [x, y] = position
-    const [top, right, bottom, left] = movementRange
-    const yDistance = (top - bottom) * yModifier
+export function resolveValidPieceMoves(piece: Piece): BoardPosition[] {
+  const isPiecesFirstMove = piece.history.length === 1
+  const movementRange = isPiecesFirstMove
+    ? piece.initialMovementRange
+    : piece.movementRange
+  const validMoves = movementRange.map(range => {
+    const [x, y] = piece.position
+    const [top, right, bottom, left] = range
+    const yDistance = top - bottom
     const xDistance = right - left
-
     return [x + xDistance, y + yDistance]
   })
 
@@ -87,20 +22,12 @@ export function resolveValidPieceMoves(
 }
 
 export function ensureNewPositionIsValid(
-  name: PieceName,
-  player: PlayerColor,
-  currentPosition: BoardPosition,
-  newPosition: BoardPosition,
-  history: BoardPosition[]
+  piece: Piece,
+  position: BoardPosition
 ) {
-  const validPieceMoves = resolveValidPieceMoves(
-    name,
-    player,
-    currentPosition,
-    history
-  )
+  const validPieceMoves = resolveValidPieceMoves(piece)
   const doesValidMovesIncludeNewPosition = validPieceMoves.some(
-    move => move[0] === newPosition[0] && move[1] === newPosition[1]
+    move => move[0] === position[0] && move[1] === position[1]
   )
   return doesValidMovesIncludeNewPosition
 }
