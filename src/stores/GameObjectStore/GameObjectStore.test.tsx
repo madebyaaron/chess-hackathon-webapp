@@ -118,7 +118,7 @@ describe(`gameObjectReducer`, () => {
       expect(result.validMoves.length).toEqual(0)
     })
 
-    it(`moving a piece add state to its history`, () => {
+    it(`moving a piece adds a new move state to its history`, () => {
       const game = generateGameObject()
       const leftWhitePawn = game.pieces[8]
       const newPosition: BoardPosition = [1, 6]

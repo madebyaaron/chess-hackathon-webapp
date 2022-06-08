@@ -9,10 +9,11 @@ export function gameObjectReducer(
   game: GameObject,
   action: ReducerAction
 ): GameObject {
-  const CHESS_PIECE_IS_SELECTED = action.type === `SELECT`
-  const CHESS_PIECE_IS_MOVED = action.type === `MOVE`
+  
+  const SELECT_ACTION = action.type === `SELECT`
+  const MOVE_ACTION = action.type === `MOVE`
 
-  if (CHESS_PIECE_IS_SELECTED) {
+  if (SELECT_ACTION) {
     const selectedPiece = action.piece
     const isPieceSelected = selectedPiece !== undefined
 
@@ -42,10 +43,12 @@ export function gameObjectReducer(
     } as GameObject
   }
 
-  if (CHESS_PIECE_IS_MOVED) {
+  if (MOVE_ACTION) {
     const selectedPiece = action.piece
     const { name, player, position, history } = selectedPiece
     const targetPosition = action.position
+
+    if (position.join(``) === targetPosition.join(``)) return game
 
     const isValidMove = ensureNewPositionIsValid(
       name,
@@ -57,22 +60,19 @@ export function gameObjectReducer(
 
     if (!isValidMove) return game
 
-    const updatedBoardPosition = game.pieces.map(piece => {
-      const updatedPiece = { ...piece, position: action.position }
-      const updatePieceMoveHistory = {
-        history: [...updatedPiece.history, action.position],
-      }
-      const hasMoved = piece === selectedPiece
+    const updatedPieces = game.pieces.map(piece => {
+      
+      const isTargetPiece = piece === selectedPiece
+      if (!isTargetPiece) return piece
 
-      return hasMoved
-        ? {
-            ...updatedPiece,
-            ...updatePieceMoveHistory,
-          }
-        : piece
+      return {
+        ...piece,
+        position: action.position,
+        history: [...piece.history, action.position]
+      }
     })
 
-    return { ...game, pieces: updatedBoardPosition, validMoves: [] }
+    return { ...game, pieces: updatedPieces, validMoves: [] }
   }
 
   return game

@@ -11,3 +11,7 @@ export function generateGameObject(config: GameObjectLike = {}): GameObject {
     ...config,
   }
 }
+
+// export function movePiece(): GameObject {
+
+// }
