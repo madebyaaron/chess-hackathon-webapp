@@ -81,6 +81,7 @@ export interface PieceDefinitions {
 // Game Object
 export interface GameObject {
   status: `loading` | `ready`
+  playerTurn: PlayerColor
   boardRows: BoardRows
   pieces: Piece[]
   selectedPiece?: Piece
@@ -89,6 +90,7 @@ export interface GameObject {
 
 export interface GameObjectLike {
   status?: `loading` | `ready`
+  playerTurn?: PlayerColor
   boardRows?: BoardRows
   pieces?: Piece[]
   selectedPiece?: Piece

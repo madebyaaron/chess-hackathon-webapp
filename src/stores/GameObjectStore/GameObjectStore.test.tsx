@@ -99,5 +99,18 @@ describe(`gameObjectReducer`, () => {
         [1, 6],
       ])
     })
+
+    it(`moving a piece ends the current turn`, () => {
+      const game = generateGameObject()
+      const currentPlayer = game.playerTurn
+      const leftWhitePawn = game.pieces[8]
+      const newPosition: BoardPosition = [1, 6]
+      const result = gameObjectReducer(game, {
+        type: `MOVE`,
+        piece: leftWhitePawn,
+        position: newPosition,
+      })
+      expect(result.playerTurn).not.toEqual(currentPlayer)
+    })
   })
 })

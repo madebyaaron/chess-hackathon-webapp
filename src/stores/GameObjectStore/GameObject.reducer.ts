@@ -1,5 +1,6 @@
 import { BoardPosition, GameObject, Piece } from '@/types'
 import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
+import { switchPlayer } from 'src/utils/switchPlayer'
 
 export type ReducerAction =
   | { type: `SELECT`; piece: Piece | undefined }
@@ -49,7 +50,14 @@ export function gameObjectReducer(
       }
     })
 
-    return { ...game, pieces: updatedPieces, validMoves: [] }
+    const newPlayer = switchPlayer(game.playerTurn)
+
+    return {
+      ...game,
+      pieces: updatedPieces,
+      validMoves: [],
+      playerTurn: newPlayer,
+    }
   }
 
   return game
