@@ -4,16 +4,26 @@ import { BoardPosition } from '@/types'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
-    it(`returns a result containing the provided pieces as selected piece`, () => {
+    it(`allows the current player to select a piece belonging to them`, () => {
       const game = generateGameObject()
-      const selectedPiece = game.pieces[0]
-
+      const selectedPiece = game.pieces.find(p => p.player === game.playerTurn)
       const result = gameObjectReducer(game, {
         type: `SELECT`,
         piece: selectedPiece,
       })
 
       expect(result.selectedPiece).toEqual(selectedPiece)
+    })
+
+    it(`does not allow a player to select a piece that does not belong to them`, () => {
+      const game = generateGameObject()
+      const selectedPiece = game.pieces.find(p => p.player !== game.playerTurn)
+      const result = gameObjectReducer(game, {
+        type: `SELECT`,
+        piece: selectedPiece,
+      })
+
+      expect(result.selectedPiece).toEqual(game.selectedPiece)
     })
 
     it(`returns a result with no selected pieces when no piece is provided`, () => {
@@ -111,6 +121,18 @@ describe(`gameObjectReducer`, () => {
         position: newPosition,
       })
       expect(result.playerTurn).not.toEqual(currentPlayer)
+    })
+
+    it(`successfully moving a piece sets the selectedPiece prop of the game object to undefined`, () => {
+      const game = generateGameObject()
+      const leftWhitePawn = game.pieces[8]
+      const newPosition: BoardPosition = [1, 6]
+      const result = gameObjectReducer(game, {
+        type: `MOVE`,
+        piece: leftWhitePawn,
+        position: newPosition,
+      })
+      expect(result.selectedPiece).toEqual(undefined)
     })
   })
 })

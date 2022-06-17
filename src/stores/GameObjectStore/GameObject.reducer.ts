@@ -21,6 +21,10 @@ export function gameObjectReducer(
       return { ...game, selectedPiece: undefined, validMoves: [] }
     }
 
+    const doesPieceBelongToCurrentPlayer =
+      selectedPiece?.player === game.playerTurn
+    if (!doesPieceBelongToCurrentPlayer) return game
+
     const validMoves: BoardPosition[] = resolveValidPieceMoves(selectedPiece)
 
     return {
@@ -39,7 +43,7 @@ export function gameObjectReducer(
     const isValidMove = ensureNewPositionIsValid(selectedPiece, action.position)
     if (!isValidMove) return game
 
-    const updatedPieces = game.pieces.map(piece => {
+    const pieces = game.pieces.map(piece => {
       const isTargetPiece = piece === selectedPiece
       if (!isTargetPiece) return piece
 
@@ -50,13 +54,14 @@ export function gameObjectReducer(
       }
     })
 
-    const newPlayer = switchPlayer(game.playerTurn)
+    const playerTurn = switchPlayer(game.playerTurn)
 
     return {
       ...game,
-      pieces: updatedPieces,
+      selectedPiece: undefined,
+      pieces,
       validMoves: [],
-      playerTurn: newPlayer,
+      playerTurn,
     }
   }
 
