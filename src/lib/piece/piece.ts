@@ -173,8 +173,8 @@ export function resolveBoardPositionsByOrientation(
 }
 
 function isPositionWithinBounds(position: BoardPosition): boolean {
-  const isPositionXWithinBounds = position[0] > 1 && position[0] < 8
-  const isPositionYWithinBounds = position[1] > 1 && position[1] < 8
+  const isPositionXWithinBounds = position[0] >= 1 && position[0] <= 8
+  const isPositionYWithinBounds = position[1] >= 1 && position[1] <= 8
   const isPositionWithinBounds =
     isPositionXWithinBounds && isPositionYWithinBounds
   return isPositionWithinBounds
@@ -190,7 +190,7 @@ function isPositionObstructed(
     targetPosition
   )
   const occupiedPosition = closestOccupiedPositions[orientation]
-  debugger
+
   if (!occupiedPosition) return false
 
   const currentPositionX = currentPosition[0]
@@ -202,33 +202,34 @@ function isPositionObstructed(
   const occupiedPositionX = occupiedPosition[0]
   const occupiedPositionY = occupiedPosition[1]
 
-  if (orientation == `up`) {
-    return !(currentPositionY - targetPositionY <= occupiedPositionY)
-    // 1 -> 3 ! 2 : false
-    // 1 -> 3 ! 4 : true
-    // c + t <= o : true
-  }
+  if (orientation === `up`) return targetPositionY <= occupiedPositionY
+  if (orientation === `down`) return targetPositionY >= occupiedPositionY
+  if (orientation === `left`) return targetPositionX <= occupiedPositionX
+  if (orientation === `right`) return targetPositionX >= occupiedPositionX
 
-  if (orientation == `down`) {
-    // 4 -> 2 ! 3 : false
-    // 4 -> 3 ! 2 : true
-    // c - t <= o : true
-    return !(currentPositionY + targetPositionY <= occupiedPositionY)
-  }
+  if (orientation === `up-right`)
+    return (
+      targetPositionY <= occupiedPositionY &&
+      targetPositionX >= occupiedPositionX
+    )
 
-  if (orientation == `left`) {
-    return !(currentPositionX + targetPositionX <= occupiedPositionX)
-    // 1 -> 3 ! 2 : false
-    // 1 -> 3 ! 4 : true
-    // c + t <= o : true
-  }
+  if (orientation === `up-left`)
+    return (
+      targetPositionY <= occupiedPositionY &&
+      targetPositionX <= occupiedPositionX
+    )
 
-  if (orientation == `right`) {
-    // 4 -> 2 ! 3 : false
-    // 4 -> 3 ! 2 : true
-    // c - t <= o : true
-    return !(currentPositionX - targetPositionX <= occupiedPositionX)
-  }
+  if (orientation === `down-right`)
+    return (
+      targetPositionY >= occupiedPositionY &&
+      targetPositionX >= occupiedPositionX
+    )
+
+  if (orientation === `down-left`)
+    return (
+      targetPositionY >= occupiedPositionY &&
+      targetPositionX <= occupiedPositionX
+    )
 
   return true
 }
