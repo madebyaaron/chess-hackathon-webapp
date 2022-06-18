@@ -1,5 +1,4 @@
 import { BoardPosition, Piece } from '@/types'
-import { generateInitialPieceState } from 'src/constants/piecesInitialState'
 import { generateGameWithSinglePiece } from 'src/testUtils/generateGameWithSinglePiece'
 import {
   ensureNewPositionIsValid,
@@ -85,30 +84,6 @@ describe(`resolveValidPieceMoves`, () => {
       [4, 8],
       [4, 7],
     ]
-    // const whiteKingValidMoves = resolveValidPieceMoves(king, whiteKingGame)
-    // expect(whiteKingValidMoves).toEqual([
-    //   [4, 6],
-    //   [5, 6],
-    //   [5, 7],
-    //   [5, 8],
-    //   [4, 8],
-    //   [3, 8],
-    //   [3, 7],
-    //   [3, 6],
-    // ])
-
-    // const blackPawnGame = generateGameWithSinglePiece(`black-pawn-1`)
-    // const pawn = blackPawnGame.pieces.find(
-    //   p => p.id === `black-pawn-1`
-    // ) as Piece
-    // pawn.position = [1, 3]
-    // pawn.history = [
-    //   [1, 2],
-    //   [1, 3],
-    // ]
-
-    // const pawnValidMoves = resolveValidPieceMoves(pawn, blackPawnGame)
-    // expect(pawnValidMoves).toEqual([[1, 4]])
   })
 
   it(`returns all valid piece moves using default movement range when first move`, () => {
@@ -141,7 +116,15 @@ describe(`resolveValidPieceMoves`, () => {
   })
 
   it.todo(
-    `does not return any would-be-valid positions occupied by other pieces`
+    `does not return any positions in range that are occupied by other pieces`
+  )
+
+  it.todo(
+    `allows knights to move into any vacant spaces in range even when obstructed by other pieces`
+  )
+
+  it.todo(
+    `prevents none-knights from moving into any vacant spaces in range that are obstructed by other pieces`
   )
 })
 
@@ -194,6 +177,7 @@ describe(`resolveBoardPositionsByOrientation`, () => {
       [4, 3],
       [4, 2],
       [4, 1],
+      [4, 0],
     ])
   })
 })

@@ -63,10 +63,6 @@ export function resolveValidNonKnightPositions(
   )
 
   return unobstructedPositions
-
-  // closest obstruction obj
-  // unobstructedPositions arr
-  // return unobstructedPositions
 }
 
 function resolveValidKnightPositions(
