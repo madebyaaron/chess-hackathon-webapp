@@ -25,7 +25,10 @@ export function gameObjectReducer(
       selectedPiece?.player === game.playerTurn
     if (!doesPieceBelongToCurrentPlayer) return game
 
-    const validMoves: BoardPosition[] = resolveValidPieceMoves(selectedPiece)
+    const validMoves: BoardPosition[] = resolveValidPieceMoves(
+      selectedPiece,
+      game
+    )
 
     return {
       ...game,
@@ -42,7 +45,12 @@ export function gameObjectReducer(
       selectedPiece.position.join(``) === targetPosition.join(``)
     if (isTargetPositionSameAsCurrentPosition) return game
 
-    const isValidMove = ensureNewPositionIsValid(selectedPiece, action.position)
+    const isValidMove = ensureNewPositionIsValid(
+      selectedPiece,
+      action.position,
+      game
+    )
+
     if (!isValidMove) return game
 
     const pieces = game.pieces.map(piece => {

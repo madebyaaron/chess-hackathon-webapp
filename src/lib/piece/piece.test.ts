@@ -1,10 +1,13 @@
 import { Piece } from '@/types'
 import { generateInitialPieceState } from 'src/constants/piecesInitialState'
+import { generateGameWithSinglePiece } from 'src/testUtils/generateGameWithSinglePiece'
 import { ensureNewPositionIsValid, resolveValidPieceMoves } from '.'
+import { generateGameObject } from '../game'
 
 describe(`generate pieces`, () => {
   it(`all needed pieces are generated`, () => {
-    const pieces = generateInitialPieceState()
+    const game = generateGameObject()
+    const { pieces } = game
 
     expect(pieces.filter(p => p.player === `black`).length).toEqual(16)
     expect(pieces.filter(p => p.player === `white`).length).toEqual(16)
@@ -18,7 +21,8 @@ describe(`generate pieces`, () => {
   })
 
   it(`all initial piece positions are correct`, () => {
-    const pieces = generateInitialPieceState()
+    const game = generateGameObject()
+    const { pieces } = game
 
     const pawn = pieces.filter(p => p.name === `pawn`)
     expect(pawn[0].history).toEqual([[1, 7]])
@@ -40,8 +44,8 @@ describe(`generate pieces`, () => {
   })
 
   it(`pieces contain initial starting position in their history`, () => {
-    const pieces = generateInitialPieceState()
-    expect(pieces.length).toEqual(32)
+    const game = generateGameObject()
+    const { pieces } = game
 
     const pawn = pieces.filter(p => p.name === `pawn`)
     expect(pawn[0].history).toEqual([[1, 7]])
@@ -65,7 +69,8 @@ describe(`generate pieces`, () => {
 
 describe(`resolveValidPieceMoves`, () => {
   it(`returns all valid piece moves using default movement range when not first move`, () => {
-    const king = generateInitialPieceState().find(
+    const whiteKingGame = generateGameWithSinglePiece(`white-king-1`)
+    const king = whiteKingGame.pieces.find(
       p => p.id === `white-king-1`
     ) as Piece
     king.position = [4, 7]
@@ -73,8 +78,8 @@ describe(`resolveValidPieceMoves`, () => {
       [4, 8],
       [4, 7],
     ]
-    const kingValidMoves = resolveValidPieceMoves(king)
-    expect(kingValidMoves).toEqual([
+    const whiteKingValidMoves = resolveValidPieceMoves(king, whiteKingGame)
+    expect(whiteKingValidMoves).toEqual([
       [4, 6],
       [5, 6],
       [5, 7],
@@ -85,7 +90,8 @@ describe(`resolveValidPieceMoves`, () => {
       [3, 6],
     ])
 
-    const pawn = generateInitialPieceState().find(
+    const blackPawnGame = generateGameWithSinglePiece(`black-pawn-1`)
+    const pawn = blackPawnGame.pieces.find(
       p => p.id === `black-pawn-1`
     ) as Piece
     pawn.position = [1, 3]
@@ -93,35 +99,60 @@ describe(`resolveValidPieceMoves`, () => {
       [1, 2],
       [1, 3],
     ]
-    const pawnValidMoves = resolveValidPieceMoves(pawn)
+
+    const pawnValidMoves = resolveValidPieceMoves(pawn, blackPawnGame)
     expect(pawnValidMoves).toEqual([[1, 4]])
   })
 
-  it(`returns all valid piece moves using initial movement range on first move`, () => {
-    const piece = generateInitialPieceState().find(
+  it(`returns all valid piece moves using default movement range when first move`, () => {
+    const whiteKingGame = generateGameWithSinglePiece(`white-king-1`)
+    const king = whiteKingGame.pieces.find(
+      p => p.id === `white-king-1`
+    ) as Piece
+    const whiteKingValidMoves = resolveValidPieceMoves(king, whiteKingGame)
+    expect(whiteKingValidMoves).toEqual([
+      [4, 7],
+      [5, 7],
+      [5, 8],
+      [5, 9],
+      [4, 9],
+      [3, 9],
+      [3, 8],
+      [3, 7],
+    ])
+
+    const blackPawnGame = generateGameWithSinglePiece(`black-pawn-1`)
+    const pawn = blackPawnGame.pieces.find(
       p => p.id === `black-pawn-1`
     ) as Piece
-    const validMoves = resolveValidPieceMoves(piece)
-    expect(validMoves).toEqual([
+
+    const pawnValidMoves = resolveValidPieceMoves(pawn, blackPawnGame)
+    expect(pawnValidMoves).toEqual([
       [1, 3],
       [1, 4],
     ])
   })
+
+  it.todo(
+    `does not return any would-be-valid positions occupied by other pieces`
+  )
 })
 
 describe(`ensureNewPositionIsValid`, () => {
   it(`returns true where the move provided is a valid move of the piece provided`, () => {
-    const piece = generateInitialPieceState().find(
+    const blackPawnGame = generateGameWithSinglePiece(`black-pawn-1`)
+    const pawn = blackPawnGame.pieces.find(
       p => p.id === `black-pawn-1`
     ) as Piece
-    expect(ensureNewPositionIsValid(piece, [1, 3])).toEqual(true)
-    expect(ensureNewPositionIsValid(piece, [1, 4])).toEqual(true)
+    expect(ensureNewPositionIsValid(pawn, [1, 3], blackPawnGame)).toEqual(true)
+    expect(ensureNewPositionIsValid(pawn, [1, 4], blackPawnGame)).toEqual(true)
   })
 
   it(`returns false where the move provided is not a valid move of the piece provided`, () => {
-    const piece = generateInitialPieceState().find(
+    const blackPawnGame = generateGameWithSinglePiece(`black-pawn-1`)
+    const pawn = blackPawnGame.pieces.find(
       p => p.id === `black-pawn-1`
     ) as Piece
-    expect(ensureNewPositionIsValid(piece, [1, 5])).toEqual(false)
+    expect(ensureNewPositionIsValid(pawn, [1, 5], blackPawnGame)).toEqual(false)
   })
 })

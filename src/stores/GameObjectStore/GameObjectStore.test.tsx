@@ -1,6 +1,6 @@
 import { generateGameObject } from 'src/lib/game'
 import { gameObjectReducer } from './GameObject.reducer'
-import { BoardPosition } from '@/types'
+import { BoardPosition, Piece } from '@/types'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
@@ -61,10 +61,10 @@ describe(`gameObjectReducer`, () => {
   describe(`move piece`, () => {
     it(`moves the provided piece to the provided position`, () => {
       const game = generateGameObject()
-      const piece = game.pieces[0]
+      const piece = game.pieces.find(p => p.id === `white-pawn-1`) as Piece
       const oldPosition = piece.position
 
-      const position: BoardPosition = [1, 2]
+      const position: BoardPosition = [1, 8]
       const result = gameObjectReducer(game, {
         type: `MOVE`,
         piece,
@@ -92,7 +92,9 @@ describe(`gameObjectReducer`, () => {
 
     it(`moving a piece adds a new move state to its history`, () => {
       const game = generateGameObject()
-      const leftWhitePawn = game.pieces[8]
+      const leftWhitePawn = game.pieces.find(
+        p => p.id === `white-pawn-1`
+      ) as Piece
       const newPosition: BoardPosition = [1, 6]
 
       expect(leftWhitePawn.history).toEqual([[1, 7]])
