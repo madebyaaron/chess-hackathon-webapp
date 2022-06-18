@@ -26,10 +26,10 @@ export function BoardGrid({
           const isHighlighted = gameObject.validMoves.some(
             move => move[0] === cell.position[0] && move[1] === cell.position[1]
           )
-
+          const cellNumber = cell.position.join(``)
           return (
             <BoardCell
-              key={cell.position.join(`,`)}
+              key={cellNumber}
               cell={cell}
               cellTheme={cellTheme}
               isHighlighted={isHighlighted}
