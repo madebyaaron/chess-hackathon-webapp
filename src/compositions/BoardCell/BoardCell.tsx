@@ -25,17 +25,18 @@ export function BoardCell({
   onClick,
   testId = `board-cell`,
 }: Props) {
+  const cellNumber = cell.position.join(``)
   return (
     <div
       data-testid={testId}
-      id={`board-cell-${cell.position.join(``)}`}
+      id={`board-cell-${cellNumber}`}
       onClick={onClick}
       className={`bg-white flex items-center justify-center ${
         isHighlighted
           ? variants.highlightedColours[cellTheme]
           : variants.standardColours[cellTheme]
       }`}
-      key={cell.position.join(``)}
+      key={cellNumber}
       data-is-highlighted={isHighlighted ? true : null}
     >
       <span className="opacity-30">{`${cell.position.toString()}`}</span>

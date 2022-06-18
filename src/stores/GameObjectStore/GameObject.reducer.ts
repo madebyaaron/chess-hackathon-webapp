@@ -38,7 +38,9 @@ export function gameObjectReducer(
     const selectedPiece = action.piece
     const targetPosition = action.position
 
-    if (selectedPiece.position.join(``) === targetPosition.join(``)) return game
+    const isTargetPositionTaken =
+      selectedPiece.position.join(``) === targetPosition.join(``)
+    if (isTargetPositionTaken) return game
 
     const isValidMove = ensureNewPositionIsValid(selectedPiece, action.position)
     if (!isValidMove) return game
