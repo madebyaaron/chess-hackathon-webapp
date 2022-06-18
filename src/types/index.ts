@@ -13,7 +13,6 @@ export interface BoardCell {
 export type BoardRows = BoardCell[][]
 export type BoardPosition = [BoardPositionNode, BoardPositionNode]
 export type BoardPositionNode = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-export type BoardPositionString = string
 export type PositionAdjustmentAmount =
   | -1
   | -2
@@ -31,14 +30,7 @@ export type PositionAdjustmentAmount =
   | 7
 
 // Pieces
-export type PieceName =
-  | `pawn`
-  | `knight`
-  | `bishop`
-  | `rook`
-  | `queen`
-  | `king`
-  | `pawn-first-move`
+export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
 
 export type PlayerColor = `white` | `black`
 
@@ -53,6 +45,16 @@ export interface Piece {
   player: PlayerColor
   history: BoardPosition[]
 }
+
+export type Orientation =
+  | `up`
+  | `up-right`
+  | `right`
+  | `down-right`
+  | `down`
+  | `down-left`
+  | `left`
+  | `up-left`
 
 export type UpDistance = number
 export type RightDistance = number
