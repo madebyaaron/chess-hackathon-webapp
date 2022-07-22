@@ -82,6 +82,30 @@ export interface PieceDefinitions {
   movementRange: MovementRange
 }
 
+export type HistoryEntry =
+  | MoveHistoryEvent
+  | AttackHistoryEvent
+  | TakenHistoryEvent
+
+export interface MoveHistoryEvent {
+  action: `move`
+  pieceId: Piece[`id`]
+  targetPosition?: BoardPosition
+}
+export interface AttackHistoryEvent {
+  action: `attack`
+  pieceId: Piece[`id`]
+  targetPieceId?: Piece[`id`]
+}
+export interface TakenHistoryEvent {
+  action: `taken`
+  pieceId: Piece[`id`]
+}
+
+// white-pawn-1 move [0,1]
+// black-queen-1 attack white-rook-2
+// white-rook taken
+
 // Game Object
 export interface GameObject {
   status: `loading` | `ready`
@@ -90,6 +114,7 @@ export interface GameObject {
   pieces: Piece[]
   selectedPiece?: Piece
   validMoves: BoardPosition[]
+  history: HistoryEntry[]
 }
 
 export interface GameObjectLike {
@@ -99,4 +124,5 @@ export interface GameObjectLike {
   pieces?: Piece[]
   selectedPiece?: Piece
   validMoves?: BoardPosition[]
+  history?: HistoryEntry[]
 }

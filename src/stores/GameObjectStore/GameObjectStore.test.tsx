@@ -72,13 +72,13 @@ describe(`gameObjectReducer`, () => {
       })
 
       const updatedPiece = result.pieces[0]
-      expect(updatedPiece.position).not.toEqual(oldPosition)
-      expect(updatedPiece.position).toEqual(position)
+      expect(updatedPiece?.position).not.toEqual(oldPosition)
+      expect(updatedPiece?.position).toEqual(position)
     })
 
     it(`moving a piece should set valid moves to an empty array`, () => {
       const game = generateGameObject()
-      const piece = game.pieces[0]
+      const piece = game.pieces[0] as Piece
       const newPosition: BoardPosition = [1, 2]
 
       const result = gameObjectReducer(game, {
@@ -93,7 +93,7 @@ describe(`gameObjectReducer`, () => {
     it(`moving a piece ends the current turn`, () => {
       const game = generateGameObject()
       const currentPlayer = game.playerTurn
-      const leftWhitePawn = game.pieces[8]
+      const leftWhitePawn = game.pieces[8] as Piece
       const newPosition: BoardPosition = [1, 6]
       const result = gameObjectReducer(game, {
         type: `move`,
@@ -105,7 +105,7 @@ describe(`gameObjectReducer`, () => {
 
     it(`successfully moving a piece sets the selectedPiece prop of the game object to undefined`, () => {
       const game = generateGameObject()
-      const leftWhitePawn = game.pieces[8]
+      const leftWhitePawn = game.pieces[8] as Piece
       const newPosition: BoardPosition = [1, 6]
       const result = gameObjectReducer(game, {
         type: `move`,
@@ -117,20 +117,8 @@ describe(`gameObjectReducer`, () => {
   })
 
   describe(`attack piece`, () => {
-    it(`attacking a piece should set the target piece status to "taken"`, () => {
-      //
-    })
+    it.todo(`attacking a piece should set the target piece status to "taken"`)
 
-    it(`attacking a piece should set valid attacks to an empty array`, () => {
-      // const game = generateGameObject()
-      // const piece = game.pieces[0]
-      // const newPosition: BoardPosition = [1, 2]
-      // const result = gameObjectReducer(game, {
-      //   type: `move`,
-      //   piece,
-      //   position: newPosition,
-      // })
-      // expect(result.validMoves.length).toEqual(0)
-    })
+    it.todo(`attacking a piece should set valid attacks to an empty array`)
   })
 })

@@ -31,22 +31,22 @@ describe(`generate pieces`, () => {
     const { pieces } = game
 
     const pawn = pieces.filter(p => p.name === `pawn`)
-    expect(pawn[0].position).toEqual([1, 7])
+    expect(pawn[0]?.position).toEqual([1, 7])
 
     const rook = pieces.filter(p => p.name === `rook`)
-    expect(rook[0].position).toEqual([1, 8])
+    expect(rook[0]?.position).toEqual([1, 8])
 
     const bishop = pieces.filter(p => p.name === `bishop`)
-    expect(bishop[0].position).toEqual([3, 8])
+    expect(bishop[0]?.position).toEqual([3, 8])
 
     const knight = pieces.filter(p => p.name === `knight`)
-    expect(knight[0].position).toEqual([2, 8])
+    expect(knight[0]?.position).toEqual([2, 8])
 
     const queen = pieces.filter(p => p.name === `queen`)
-    expect(queen[0].position).toEqual([5, 8])
+    expect(queen[0]?.position).toEqual([5, 8])
 
     const king = pieces.filter(p => p.name === `king`)
-    expect(king[0].position).toEqual([4, 8])
+    expect(king[0]?.position).toEqual([4, 8])
   })
 })
 

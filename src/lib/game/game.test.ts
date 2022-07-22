@@ -20,4 +20,9 @@ describe(`generateGameObject`, () => {
     const gameObject = generateGameObject()
     expect(Array.isArray(gameObject.pieces)).toBe(true)
   })
+
+  it(`game object has a history array`, () => {
+    const gameObject = generateGameObject()
+    expect(Array.isArray(gameObject.history)).toBe(true)
+  })
 })

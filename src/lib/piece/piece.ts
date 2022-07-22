@@ -156,7 +156,8 @@ export function resolveBoardPositionsByOrientation(
 
   while (isPositionWithinBounds(currentPosition)) {
     const [currentX, currentY] = currentPosition
-    const [adjustmentX, adjustmentY] = traversalOrientation
+    const [adjustmentX, adjustmentY] = traversalOrientation as [number, number]
+
     const newPosition = [
       currentX + adjustmentX,
       currentY + adjustmentY,
