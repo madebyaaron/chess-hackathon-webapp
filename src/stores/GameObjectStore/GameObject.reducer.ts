@@ -95,6 +95,7 @@ export function gameObjectReducer(
       pieces,
       history,
       validMoves: [],
+      validAttacks: [],
       playerTurn,
     }
   }
