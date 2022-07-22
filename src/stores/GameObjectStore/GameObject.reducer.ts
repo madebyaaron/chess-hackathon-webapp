@@ -1,4 +1,4 @@
-import { BoardPosition, GameObject, Piece } from '@/types'
+import { BoardPosition, GameObject, MoveHistoryEvent, Piece } from '@/types'
 import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
@@ -65,12 +65,22 @@ export function gameObjectReducer(
       }
     })
 
+    const moveHistoryEntry: MoveHistoryEvent = {
+      action: `move`,
+      pieceId: selectedPiece.id,
+      targetPosition: targetPosition,
+      currentPosition: selectedPiece.position,
+      player: game.playerTurn,
+    }
+    const history = [...game.history, moveHistoryEntry]
+
     const playerTurn = switchPlayer(game.playerTurn)
 
     return {
       ...game,
       selectedPiece: undefined,
       pieces,
+      history,
       validMoves: [],
       playerTurn,
     }

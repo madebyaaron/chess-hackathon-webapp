@@ -82,24 +82,21 @@ export interface PieceDefinitions {
   movementRange: MovementRange
 }
 
-export type HistoryEntry =
-  | MoveHistoryEvent
-  | AttackHistoryEvent
-  | TakenHistoryEvent
+export type HistoryEntry = MoveHistoryEvent | AttackHistoryEvent
 
 export interface MoveHistoryEvent {
+  currentPosition: BoardPosition
   action: `move`
   pieceId: Piece[`id`]
-  targetPosition?: BoardPosition
+  targetPosition: BoardPosition
+  player: PlayerColor
 }
 export interface AttackHistoryEvent {
+  currentPosition: BoardPosition
   action: `attack`
   pieceId: Piece[`id`]
-  targetPieceId?: Piece[`id`]
-}
-export interface TakenHistoryEvent {
-  action: `taken`
-  pieceId: Piece[`id`]
+  targetPieceId: Piece[`id`]
+  targetPosition: BoardPosition
 }
 
 // white-pawn-1 move [0,1]

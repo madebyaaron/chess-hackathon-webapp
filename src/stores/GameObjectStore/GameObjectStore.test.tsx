@@ -1,6 +1,6 @@
 import { generateGameObject } from 'src/lib/game'
 import { gameObjectReducer } from './GameObject.reducer'
-import { BoardPosition, Piece } from '@/types'
+import { BoardPosition, MoveHistoryEvent, Piece } from '@/types'
 
 describe(`gameObjectReducer`, () => {
   describe(`select piece`, () => {
@@ -114,11 +114,39 @@ describe(`gameObjectReducer`, () => {
       })
       expect(result.selectedPiece).toEqual(undefined)
     })
+
+    it(`moving a piece adds a move history entry to gameObject.history`, () => {
+      const game = generateGameObject()
+      const leftWhitePawn = game.pieces[8] as Piece
+      const newPosition: BoardPosition = [1, 6]
+      const result = gameObjectReducer(game, {
+        type: `move`,
+        piece: leftWhitePawn,
+        position: newPosition,
+      })
+      const moveHistoryEvent: MoveHistoryEvent = {
+        action: `move`,
+        pieceId: leftWhitePawn.id,
+        targetPosition: newPosition,
+        currentPosition: leftWhitePawn.position,
+        player: game.playerTurn,
+      }
+
+      expect(result.history).toEqual([moveHistoryEvent])
+    })
   })
 
   describe(`attack piece`, () => {
     it.todo(`attacking a piece should set the target piece status to "taken"`)
 
     it.todo(`attacking a piece should set valid attacks to an empty array`)
+
+    it.todo(
+      `attacking a piece adds an attack history entry to gameObject.history`
+    )
+
+    it.todo(
+      `attacking a piece adds a taken history entry to gameObject.history`
+    )
   })
 })
