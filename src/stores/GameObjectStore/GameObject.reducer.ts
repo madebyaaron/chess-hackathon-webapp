@@ -74,7 +74,8 @@ export function gameObjectReducer(
       return {
         ...piece,
         position: action.position,
-      }
+        status: `inPlay`,
+      } as Piece
     })
 
     const moveHistoryEntry: MoveHistoryEvent = {
