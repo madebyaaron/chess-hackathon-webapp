@@ -9,6 +9,7 @@ export function generateGameObject(config: GameObjectLike = {}): GameObject {
     boardRows: generateBoard(),
     pieces: generatePieces(),
     validMoves: [],
+    validAttacks: [],
     history: [],
     ...config,
   }

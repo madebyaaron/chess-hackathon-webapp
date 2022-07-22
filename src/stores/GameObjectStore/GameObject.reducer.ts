@@ -1,5 +1,9 @@
 import { BoardPosition, GameObject, MoveHistoryEvent, Piece } from '@/types'
-import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
+import {
+  resolveValidPieceMoves,
+  ensureNewPositionIsValid,
+  resolveValidPieceAttacks,
+} from 'src/lib/piece'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
 export type ReducerAction =
@@ -20,7 +24,12 @@ export function gameObjectReducer(
     const isPieceSelected = selectedPiece !== undefined
 
     if (!isPieceSelected) {
-      return { ...game, selectedPiece: undefined, validMoves: [] }
+      return {
+        ...game,
+        selectedPiece: undefined,
+        validMoves: [],
+        validAttacks: [],
+      }
     }
 
     const doesPieceBelongToCurrentPlayer =
@@ -32,10 +41,13 @@ export function gameObjectReducer(
       game
     )
 
+    const validAttacks: Piece[] = resolveValidPieceAttacks(selectedPiece, game)
+
     return {
       ...game,
       selectedPiece,
       validMoves,
+      validAttacks,
     } as GameObject
   }
 

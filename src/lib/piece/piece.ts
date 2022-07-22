@@ -1,6 +1,7 @@
 import { piecesInitialState } from './../../constants/piecesInitialState'
 import { BoardPosition, GameObject, Orientation, Piece } from '@/types'
 import { orientations } from 'src/constants/orientations'
+import { switchPlayer } from 'src/utils/switchPlayer'
 
 const traversalOrientationMap = {
   up: [0, -1],
@@ -41,6 +42,53 @@ export function resolveValidPieceMoves(piece: Piece, game: GameObject) {
     positionsInRange,
     occupiedPositions
   )
+}
+
+export function resolveValidPieceAttacks(
+  selectedPiece: Piece,
+  game: GameObject
+): Piece[] {
+  const attackRange = selectedPiece.attackRange
+  const currentPosition = selectedPiece.position
+  const occupiedPositions = game.pieces.map(p => p.position)
+  const closestOccupiedPositions = findClosestOccupiedPositions(
+    currentPosition,
+    occupiedPositions
+  )
+
+  const attacksInRange = attackRange.map(range => {
+    const [x, y] = currentPosition
+    const [top, right, bottom, left] = range
+    const yDistance = top - bottom
+    const xDistance = right - left
+    return [x + xDistance, y + yDistance] as BoardPosition
+  })
+
+  const closestOccupiedPositionStringsArr = Object.values(
+    closestOccupiedPositions
+  )
+    .filter(position => position !== undefined)
+    .map(position => position?.join(`,`))
+
+  const closestPieces = game.pieces.filter(piece => {
+    const positionString = piece.position.join(`,`)
+    const includedInPositionsArr = closestOccupiedPositionStringsArr.some(
+      s => s === positionString
+    )
+    return includedInPositionsArr
+  })
+
+  const inRangePieces = closestPieces.filter(piece =>
+    attacksInRange.some(
+      position => piece.position.join(`,`) === position.join(`,`)
+    )
+  )
+
+  const inRangeEnemyPieces = inRangePieces.filter(
+    piece => piece.player === switchPlayer(game.playerTurn)
+  )
+
+  return inRangeEnemyPieces
 }
 
 export function resolveValidNonKnightPositions(
@@ -189,9 +237,6 @@ function isPositionObstructed(
   const occupiedPosition = closestOccupiedPositions[orientation]
 
   if (!occupiedPosition) return false
-
-  // const currentPositionX = currentPosition[0]
-  // const currentPositionY = currentPosition[1]
 
   const targetPositionX = targetPosition[0]
   const targetPositionY = targetPosition[1]

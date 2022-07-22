@@ -145,6 +145,7 @@ export interface GameObject {
   pieces: Piece[]
   selectedPiece?: Piece
   validMoves: BoardPosition[]
+  validAttacks: Piece[]
   history: HistoryEntry[]
 }
 
@@ -155,5 +156,6 @@ export interface GameObjectLike {
   pieces?: Piece[]
   selectedPiece?: Piece
   validMoves?: BoardPosition[]
+  validAttacks?: Piece[]
   history?: HistoryEntry[]
 }
