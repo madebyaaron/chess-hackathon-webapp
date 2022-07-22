@@ -47,6 +47,16 @@ describe(`gameObjectReducer`, () => {
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
     })
 
+    it(`returns a result containing valid attack moves when selecting a piece`, () => {
+      // const game = generateGameObject()
+      // const blackLeftRook = game.pieces[0]
+      // const result = gameObjectReducer(game, {
+      //   type: `select`,
+      //   piece: blackLeftRook,
+      // })
+      // expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
+    })
+
     it(`deselecting a piece should set no valid moves in result`, () => {
       const game = generateGameObject()
 

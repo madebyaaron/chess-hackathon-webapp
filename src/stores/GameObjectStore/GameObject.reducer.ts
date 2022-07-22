@@ -86,7 +86,44 @@ export function gameObjectReducer(
     }
   }
 
-  if (attackAction) return game
+  if (attackAction) {
+    // const selectedPiece = action.piece
+    // const targetPosition = action.position
+    // const isTargetPositionSameAsCurrentPosition =
+    //   selectedPiece.position.join(``) === targetPosition.join(``)
+    // if (isTargetPositionSameAsCurrentPosition) return game
+    // const isValidMove = ensureNewPositionIsValid(
+    //   selectedPiece,
+    //   action.position,
+    //   game
+    // )
+    // if (!isValidMove) return game
+    // const pieces = game.pieces.map(piece => {
+    //   const isTargetPiece = piece === selectedPiece
+    //   if (!isTargetPiece) return piece
+    //   return {
+    //     ...piece,
+    //     position: action.position,
+    //   }
+    // })
+    // const moveHistoryEntry: MoveHistoryEvent = {
+    //   action: `move`,
+    //   pieceId: selectedPiece.id,
+    //   targetPosition: targetPosition,
+    //   currentPosition: selectedPiece.position,
+    //   player: game.playerTurn,
+    // }
+    // const history = [...game.history, moveHistoryEntry]
+    // const playerTurn = switchPlayer(game.playerTurn)
+    // return {
+    //   ...game,
+    //   selectedPiece: undefined,
+    //   pieces,
+    //   history,
+    //   validMoves: [],
+    //   playerTurn,
+    // }
+  }
 
   return game
 }

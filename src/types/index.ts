@@ -37,8 +37,42 @@ export type PlayerColor = `white` | `black`
 export type PieceStatus = `init` | `inPlay` | `taken`
 
 export type PieceMovementRange = [number, number, number, number][]
+
+export type PieceId =
+  | `white-rook-1`
+  | `white-rook-2`
+  | `white-bishop-1`
+  | `white-bishop-2`
+  | `white-knight-1`
+  | `white-knight-2`
+  | `white-king-1`
+  | `white-queen-1`
+  | `white-pawn-1`
+  | `white-pawn-2`
+  | `white-pawn-3`
+  | `white-pawn-4`
+  | `white-pawn-5`
+  | `white-pawn-6`
+  | `white-pawn-7`
+  | `white-pawn-8`
+  | `black-rook-1`
+  | `black-rook-2`
+  | `black-bishop-1`
+  | `black-bishop-2`
+  | `black-knight-1`
+  | `black-knight-2`
+  | `black-king-1`
+  | `black-queen-1`
+  | `black-pawn-1`
+  | `black-pawn-2`
+  | `black-pawn-3`
+  | `black-pawn-4`
+  | `black-pawn-5`
+  | `black-pawn-6`
+  | `black-pawn-7`
+  | `black-pawn-8`
 export interface Piece {
-  id: string
+  id: PieceId
   name: PieceName
   position: BoardPosition
   status: PieceStatus
