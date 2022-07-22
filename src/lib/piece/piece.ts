@@ -18,7 +18,7 @@ export function generatePieces(): Piece[] {
 }
 
 export function resolveValidPieceMoves(piece: Piece, game: GameObject) {
-  const isPiecesFirstMove = piece.history.length === 1
+  const isPiecesFirstMove = piece.status === `init`
   const movementRange = isPiecesFirstMove
     ? piece.initialMovementRange
     : piece.movementRange
@@ -189,8 +189,8 @@ function isPositionObstructed(
 
   if (!occupiedPosition) return false
 
-  const currentPositionX = currentPosition[0]
-  const currentPositionY = currentPosition[1]
+  // const currentPositionX = currentPosition[0]
+  // const currentPositionY = currentPosition[1]
 
   const targetPositionX = targetPosition[0]
   const targetPositionY = targetPosition[1]

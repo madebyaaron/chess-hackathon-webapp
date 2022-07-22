@@ -34,16 +34,18 @@ export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
 
 export type PlayerColor = `white` | `black`
 
+export type PieceStatus = `init` | `inPlay` | `taken`
+
 export type PieceMovementRange = [number, number, number, number][]
 export interface Piece {
   id: string
   name: PieceName
   position: BoardPosition
+  status: PieceStatus
   movementRange: MovementRange
   initialMovementRange: MovementRange
   attackRange: AttackRange
   player: PlayerColor
-  history: BoardPosition[]
 }
 
 export type Orientation =

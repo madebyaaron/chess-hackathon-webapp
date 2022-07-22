@@ -12,7 +12,7 @@ export function BoardGrid({
 
   function handleCellClick(position: BoardPosition) {
     const piece = gameObject.selectedPiece
-    if (piece) dispatch({ type: `MOVE`, piece, position })
+    if (piece) dispatch({ type: `move`, piece, position })
   }
 
   return (

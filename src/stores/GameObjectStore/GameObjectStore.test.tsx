@@ -8,7 +8,7 @@ describe(`gameObjectReducer`, () => {
       const game = generateGameObject()
       const selectedPiece = game.pieces.find(p => p.player === game.playerTurn)
       const result = gameObjectReducer(game, {
-        type: `SELECT`,
+        type: `select`,
         piece: selectedPiece,
       })
 
@@ -19,7 +19,7 @@ describe(`gameObjectReducer`, () => {
       const game = generateGameObject()
       const selectedPiece = game.pieces.find(p => p.player !== game.playerTurn)
       const result = gameObjectReducer(game, {
-        type: `SELECT`,
+        type: `select`,
         piece: selectedPiece,
       })
 
@@ -31,7 +31,7 @@ describe(`gameObjectReducer`, () => {
       game.selectedPiece = game.pieces[0]
 
       const result = gameObjectReducer(game, {
-        type: `SELECT`,
+        type: `select`,
         piece: undefined,
       })
       expect(result.selectedPiece).toEqual(undefined)
@@ -41,7 +41,7 @@ describe(`gameObjectReducer`, () => {
       const game = generateGameObject()
       const blackLeftRook = game.pieces[0]
       const result = gameObjectReducer(game, {
-        type: `SELECT`,
+        type: `select`,
         piece: blackLeftRook,
       })
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
@@ -51,7 +51,7 @@ describe(`gameObjectReducer`, () => {
       const game = generateGameObject()
 
       const result = gameObjectReducer(game, {
-        type: `SELECT`,
+        type: `select`,
         piece: undefined,
       })
       expect(result.validMoves.length).toEqual(0)
@@ -66,7 +66,7 @@ describe(`gameObjectReducer`, () => {
 
       const position: BoardPosition = [1, 8]
       const result = gameObjectReducer(game, {
-        type: `MOVE`,
+        type: `move`,
         piece,
         position,
       })
@@ -76,40 +76,18 @@ describe(`gameObjectReducer`, () => {
       expect(updatedPiece.position).toEqual(position)
     })
 
-    it(`moving a piece should set no valid moves in result`, () => {
+    it(`moving a piece should set valid moves to an empty array`, () => {
       const game = generateGameObject()
       const piece = game.pieces[0]
       const newPosition: BoardPosition = [1, 2]
 
       const result = gameObjectReducer(game, {
-        type: `MOVE`,
+        type: `move`,
         piece,
         position: newPosition,
       })
 
       expect(result.validMoves.length).toEqual(0)
-    })
-
-    it(`moving a piece adds a new move state to its history`, () => {
-      const game = generateGameObject()
-      const leftWhitePawn = game.pieces.find(
-        p => p.id === `white-pawn-1`
-      ) as Piece
-      const newPosition: BoardPosition = [1, 6]
-
-      expect(leftWhitePawn.history).toEqual([[1, 7]])
-
-      const result = gameObjectReducer(game, {
-        type: `MOVE`,
-        piece: leftWhitePawn,
-        position: newPosition,
-      })
-
-      const updatedPiece = result.pieces[8]
-      expect(updatedPiece.history).toEqual([
-        [1, 7],
-        [1, 6],
-      ])
     })
 
     it(`moving a piece ends the current turn`, () => {
@@ -118,7 +96,7 @@ describe(`gameObjectReducer`, () => {
       const leftWhitePawn = game.pieces[8]
       const newPosition: BoardPosition = [1, 6]
       const result = gameObjectReducer(game, {
-        type: `MOVE`,
+        type: `move`,
         piece: leftWhitePawn,
         position: newPosition,
       })
@@ -130,11 +108,29 @@ describe(`gameObjectReducer`, () => {
       const leftWhitePawn = game.pieces[8]
       const newPosition: BoardPosition = [1, 6]
       const result = gameObjectReducer(game, {
-        type: `MOVE`,
+        type: `move`,
         piece: leftWhitePawn,
         position: newPosition,
       })
       expect(result.selectedPiece).toEqual(undefined)
+    })
+  })
+
+  describe(`attack piece`, () => {
+    it(`attacking a piece should set the target piece status to "taken"`, () => {
+      //
+    })
+
+    it(`attacking a piece should set valid attacks to an empty array`, () => {
+      // const game = generateGameObject()
+      // const piece = game.pieces[0]
+      // const newPosition: BoardPosition = [1, 2]
+      // const result = gameObjectReducer(game, {
+      //   type: `move`,
+      //   piece,
+      //   position: newPosition,
+      // })
+      // expect(result.validMoves.length).toEqual(0)
     })
   })
 })

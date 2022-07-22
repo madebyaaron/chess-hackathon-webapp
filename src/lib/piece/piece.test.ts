@@ -31,45 +31,22 @@ describe(`generate pieces`, () => {
     const { pieces } = game
 
     const pawn = pieces.filter(p => p.name === `pawn`)
-    expect(pawn[0].history).toEqual([[1, 7]])
+    expect(pawn[0].position).toEqual([1, 7])
 
     const rook = pieces.filter(p => p.name === `rook`)
-    expect(rook[0].history).toEqual([[1, 8]])
+    expect(rook[0].position).toEqual([1, 8])
 
     const bishop = pieces.filter(p => p.name === `bishop`)
-    expect(bishop[0].history).toEqual([[3, 8]])
+    expect(bishop[0].position).toEqual([3, 8])
 
     const knight = pieces.filter(p => p.name === `knight`)
-    expect(knight[0].history).toEqual([[2, 8]])
+    expect(knight[0].position).toEqual([2, 8])
 
     const queen = pieces.filter(p => p.name === `queen`)
-    expect(queen[0].history).toEqual([[5, 8]])
+    expect(queen[0].position).toEqual([5, 8])
 
     const king = pieces.filter(p => p.name === `king`)
-    expect(king[0].history).toEqual([[4, 8]])
-  })
-
-  it(`pieces contain initial starting position in their history`, () => {
-    const game = generateGameObject()
-    const { pieces } = game
-
-    const pawn = pieces.filter(p => p.name === `pawn`)
-    expect(pawn[0].history).toEqual([[1, 7]])
-
-    const rook = pieces.filter(p => p.name === `rook`)
-    expect(rook[0].history).toEqual([[1, 8]])
-
-    const bishop = pieces.filter(p => p.name === `bishop`)
-    expect(bishop[0].history).toEqual([[3, 8]])
-
-    const knight = pieces.filter(p => p.name === `knight`)
-    expect(knight[0].history).toEqual([[2, 8]])
-
-    const queen = pieces.filter(p => p.name === `queen`)
-    expect(queen[0].history).toEqual([[5, 8]])
-
-    const king = pieces.filter(p => p.name === `king`)
-    expect(king[0].history).toEqual([[4, 8]])
+    expect(king[0].position).toEqual([4, 8])
   })
 })
 
@@ -80,10 +57,6 @@ describe(`resolveValidPieceMoves`, () => {
       p => p.id === `white-king-1`
     ) as Piece
     king.position = [4, 7]
-    king.history = [
-      [4, 8],
-      [4, 7],
-    ]
   })
 
   it(`returns all valid piece moves using default movement range when first move`, () => {

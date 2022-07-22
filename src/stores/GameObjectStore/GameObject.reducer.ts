@@ -3,17 +3,19 @@ import { resolveValidPieceMoves, ensureNewPositionIsValid } from 'src/lib/piece'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
 export type ReducerAction =
-  | { type: `SELECT`; piece: Piece | undefined }
-  | { type: `MOVE`; piece: Piece; position: BoardPosition }
+  | { type: `select`; piece: Piece | undefined }
+  | { type: `move`; piece: Piece; position: BoardPosition }
+  | { type: `attack`; selectedPiece: Piece; targetPiece: Piece }
 
 export function gameObjectReducer(
   game: GameObject,
   action: ReducerAction
 ): GameObject {
-  const SELECT_ACTION = action.type === `SELECT`
-  const MOVE_ACTION = action.type === `MOVE`
+  const selectAction = action.type === `select`
+  const moveAction = action.type === `move`
+  const attackAction = action.type === `attack`
 
-  if (SELECT_ACTION) {
+  if (selectAction) {
     const selectedPiece = action.piece
     const isPieceSelected = selectedPiece !== undefined
 
@@ -37,7 +39,7 @@ export function gameObjectReducer(
     } as GameObject
   }
 
-  if (MOVE_ACTION) {
+  if (moveAction) {
     const selectedPiece = action.piece
     const targetPosition = action.position
 
@@ -60,7 +62,6 @@ export function gameObjectReducer(
       return {
         ...piece,
         position: action.position,
-        history: [...piece.history, action.position],
       }
     })
 
@@ -74,6 +75,8 @@ export function gameObjectReducer(
       playerTurn,
     }
   }
+
+  if (attackAction) return game
 
   return game
 }

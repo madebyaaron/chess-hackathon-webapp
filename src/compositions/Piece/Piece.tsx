@@ -22,8 +22,8 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     const isAChessPieceSelected = piece === gameObject.selectedPiece
 
     return isAChessPieceSelected
-      ? dispatch({ type: `SELECT`, piece: undefined })
-      : dispatch({ type: `SELECT`, piece })
+      ? dispatch({ type: `select`, piece: undefined })
+      : dispatch({ type: `select`, piece })
   }
 
   const variants = {

@@ -28,7 +28,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteRookMovementRange,
       attackRange: whiteRookMovementRange,
       player: `white`,
-      history: [[1, 8]],
+      status: `init`,
     },
     {
       id: `white-knight-1`,
@@ -38,7 +38,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteKnightMovementRange,
       attackRange: whiteKnightMovementRange,
       player: `white`,
-      history: [[2, 8]],
+      status: `init`,
     },
     {
       id: `white-bishop-1`,
@@ -48,7 +48,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteBishopMovementRange,
       attackRange: whiteBishopMovementRange,
       player: `white`,
-      history: [[3, 8]],
+      status: `init`,
     },
     {
       id: `white-king-1`,
@@ -58,7 +58,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteKingMovementRange,
       attackRange: whiteKingMovementRange,
       player: `white`,
-      history: [[4, 8]],
+      status: `init`,
     },
     {
       id: `white-queen-1`,
@@ -68,7 +68,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteQueenMovementRange,
       attackRange: whiteQueenMovementRange,
       player: `white`,
-      history: [[5, 8]],
+      status: `init`,
     },
     {
       id: `white-bishop-2`,
@@ -78,7 +78,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteBishopMovementRange,
       attackRange: whiteBishopMovementRange,
       player: `white`,
-      history: [[6, 8]],
+      status: `init`,
     },
     {
       id: `white-knight-2`,
@@ -88,7 +88,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteKnightMovementRange,
       attackRange: whiteKnightMovementRange,
       player: `white`,
-      history: [[7, 8]],
+      status: `init`,
     },
     {
       id: `white-rook-2`,
@@ -98,7 +98,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whiteRookMovementRange,
       attackRange: whiteRookMovementRange,
       player: `white`,
-      history: [[8, 8]],
+      status: `init`,
     },
     {
       id: `white-pawn-1`,
@@ -108,7 +108,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[1, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-2`,
@@ -118,7 +118,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[2, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-3`,
@@ -128,7 +128,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[3, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-4`,
@@ -138,7 +138,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[4, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-5`,
@@ -148,7 +148,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[5, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-6`,
@@ -158,7 +158,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[6, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-7`,
@@ -168,7 +168,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[7, 7]],
+      status: `init`,
     },
     {
       id: `white-pawn-8`,
@@ -178,7 +178,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: whitePawnInitialMovementRange,
       attackRange: whitePawnAttackRange,
       player: `white`,
-      history: [[8, 7]],
+      status: `init`,
     },
     {
       id: `black-pawn-1`,
@@ -188,7 +188,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[1, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-2`,
@@ -198,7 +198,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[2, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-3`,
@@ -208,7 +208,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[3, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-4`,
@@ -218,7 +218,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[4, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-5`,
@@ -228,7 +228,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[5, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-6`,
@@ -238,7 +238,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[6, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-7`,
@@ -248,7 +248,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[7, 2]],
+      status: `init`,
     },
     {
       id: `black-pawn-8`,
@@ -258,7 +258,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackPawnInitialMovementRange,
       attackRange: blackPawnAttackRange,
       player: `black`,
-      history: [[8, 2]],
+      status: `init`,
     },
     {
       id: `black-rook-1`,
@@ -268,7 +268,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackRookMovementRange,
       attackRange: blackRookMovementRange,
       player: `black`,
-      history: [[1, 1]],
+      status: `init`,
     },
     {
       id: `black-knight-1`,
@@ -278,7 +278,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackKnightMovementRange,
       attackRange: blackKnightMovementRange,
       player: `black`,
-      history: [[2, 1]],
+      status: `init`,
     },
     {
       id: `black-bishop-1`,
@@ -288,7 +288,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackBishopMovementRange,
       attackRange: blackBishopMovementRange,
       player: `black`,
-      history: [[3, 1]],
+      status: `init`,
     },
     {
       id: `black-king-1`,
@@ -298,7 +298,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackKingMovementRange,
       attackRange: blackKingMovementRange,
       player: `black`,
-      history: [[4, 1]],
+      status: `init`,
     },
     {
       id: `black-queen-1`,
@@ -308,7 +308,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackQueenMovementRange,
       attackRange: blackQueenMovementRange,
       player: `black`,
-      history: [[5, 1]],
+      status: `init`,
     },
     {
       id: `black-bishop-2`,
@@ -318,7 +318,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackBishopMovementRange,
       attackRange: blackBishopMovementRange,
       player: `black`,
-      history: [[6, 1]],
+      status: `init`,
     },
     {
       id: `black-knight-2`,
@@ -328,7 +328,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackKnightMovementRange,
       attackRange: blackKnightMovementRange,
       player: `black`,
-      history: [[7, 1]],
+      status: `init`,
     },
     {
       id: `black-rook-2`,
@@ -338,7 +338,7 @@ export function generateInitialPieceState(): Piece[] {
       initialMovementRange: blackRookMovementRange,
       attackRange: blackRookMovementRange,
       player: `black`,
-      history: [[8, 1]],
+      status: `init`,
     },
   ]
 }
@@ -352,7 +352,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteRookMovementRange,
     attackRange: whiteRookMovementRange,
     player: `white`,
-    history: [[1, 8]],
+    status: `init`,
   },
   {
     id: `white-knight-1`,
@@ -362,7 +362,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteKnightMovementRange,
     attackRange: whiteKnightMovementRange,
     player: `white`,
-    history: [[2, 8]],
+    status: `init`,
   },
   {
     id: `white-bishop-1`,
@@ -372,7 +372,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteBishopMovementRange,
     attackRange: whiteBishopMovementRange,
     player: `white`,
-    history: [[3, 8]],
+    status: `init`,
   },
   {
     id: `white-king-1`,
@@ -382,7 +382,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteKingMovementRange,
     attackRange: whiteKingMovementRange,
     player: `white`,
-    history: [[4, 8]],
+    status: `init`,
   },
   {
     id: `white-queen-1`,
@@ -392,7 +392,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteQueenMovementRange,
     attackRange: whiteQueenMovementRange,
     player: `white`,
-    history: [[5, 8]],
+    status: `init`,
   },
   {
     id: `white-bishop-2`,
@@ -402,7 +402,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteBishopMovementRange,
     attackRange: whiteBishopMovementRange,
     player: `white`,
-    history: [[6, 8]],
+    status: `init`,
   },
   {
     id: `white-knight-2`,
@@ -412,7 +412,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteKnightMovementRange,
     attackRange: whiteKnightMovementRange,
     player: `white`,
-    history: [[7, 8]],
+    status: `init`,
   },
   {
     id: `white-rook-2`,
@@ -422,7 +422,7 @@ export const piecesInitialState = [
     initialMovementRange: whiteRookMovementRange,
     attackRange: whiteRookMovementRange,
     player: `white`,
-    history: [[8, 8]],
+    status: `init`,
   },
   {
     id: `white-pawn-1`,
@@ -432,7 +432,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[1, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-2`,
@@ -442,7 +442,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[2, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-3`,
@@ -452,7 +452,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[3, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-4`,
@@ -462,7 +462,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[4, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-5`,
@@ -472,7 +472,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[5, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-6`,
@@ -482,7 +482,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[6, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-7`,
@@ -492,7 +492,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[7, 7]],
+    status: `init`,
   },
   {
     id: `white-pawn-8`,
@@ -502,7 +502,7 @@ export const piecesInitialState = [
     initialMovementRange: whitePawnInitialMovementRange,
     attackRange: whitePawnAttackRange,
     player: `white`,
-    history: [[8, 7]],
+    status: `init`,
   },
   {
     id: `black-pawn-1`,
@@ -512,7 +512,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[1, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-2`,
@@ -522,7 +522,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[2, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-3`,
@@ -532,7 +532,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[3, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-4`,
@@ -542,7 +542,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[4, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-5`,
@@ -552,7 +552,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[5, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-6`,
@@ -562,7 +562,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[6, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-7`,
@@ -572,7 +572,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[7, 2]],
+    status: `init`,
   },
   {
     id: `black-pawn-8`,
@@ -582,7 +582,7 @@ export const piecesInitialState = [
     initialMovementRange: blackPawnInitialMovementRange,
     attackRange: blackPawnAttackRange,
     player: `black`,
-    history: [[8, 2]],
+    status: `init`,
   },
   {
     id: `black-rook-1`,
@@ -592,7 +592,7 @@ export const piecesInitialState = [
     initialMovementRange: blackRookMovementRange,
     attackRange: blackRookMovementRange,
     player: `black`,
-    history: [[1, 1]],
+    status: `init`,
   },
   {
     id: `black-knight-1`,
@@ -602,7 +602,7 @@ export const piecesInitialState = [
     initialMovementRange: blackKnightMovementRange,
     attackRange: blackKnightMovementRange,
     player: `black`,
-    history: [[2, 1]],
+    status: `init`,
   },
   {
     id: `black-bishop-1`,
@@ -612,7 +612,7 @@ export const piecesInitialState = [
     initialMovementRange: blackBishopMovementRange,
     attackRange: blackBishopMovementRange,
     player: `black`,
-    history: [[3, 1]],
+    status: `init`,
   },
   {
     id: `black-king-1`,
@@ -622,7 +622,7 @@ export const piecesInitialState = [
     initialMovementRange: blackKingMovementRange,
     attackRange: blackKingMovementRange,
     player: `black`,
-    history: [[4, 1]],
+    status: `init`,
   },
   {
     id: `black-queen-1`,
@@ -632,7 +632,7 @@ export const piecesInitialState = [
     initialMovementRange: blackQueenMovementRange,
     attackRange: blackQueenMovementRange,
     player: `black`,
-    history: [[5, 1]],
+    status: `init`,
   },
   {
     id: `black-bishop-2`,
@@ -642,7 +642,7 @@ export const piecesInitialState = [
     initialMovementRange: blackBishopMovementRange,
     attackRange: blackBishopMovementRange,
     player: `black`,
-    history: [[6, 1]],
+    status: `init`,
   },
   {
     id: `black-knight-2`,
@@ -652,7 +652,7 @@ export const piecesInitialState = [
     initialMovementRange: blackKnightMovementRange,
     attackRange: blackKnightMovementRange,
     player: `black`,
-    history: [[7, 1]],
+    status: `init`,
   },
   {
     id: `black-rook-2`,
@@ -662,6 +662,6 @@ export const piecesInitialState = [
     initialMovementRange: blackRookMovementRange,
     attackRange: blackRookMovementRange,
     player: `black`,
-    history: [[8, 1]],
+    status: `init`,
   },
 ] as Piece[]
