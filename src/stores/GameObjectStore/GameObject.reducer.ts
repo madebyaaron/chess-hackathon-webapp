@@ -3,13 +3,14 @@ import {
   resolveValidPieceMoves,
   ensureNewPositionIsValid,
   resolveValidPieceAttacks,
+  ensureAttackIsValid,
 } from 'src/lib/piece'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
 export type ReducerAction =
   | { type: `select`; piece: Piece | undefined }
   | { type: `move`; piece: Piece; position: BoardPosition }
-  | { type: `attack`; selectedPiece: Piece; targetPiece: Piece }
+  | { type: `attack`; piece: Piece; enemyPiece: Piece }
 
 export function gameObjectReducer(
   game: GameObject,
@@ -101,8 +102,25 @@ export function gameObjectReducer(
   }
 
   if (attackAction) {
-    // const selectedPiece = action.piece
-    // const targetPosition = action.position
+    const selectedPiece = action.piece
+    const enemyPiece = action.enemyPiece
+
+    const isValidAttack = ensureAttackIsValid(selectedPiece, enemyPiece, game)
+    if (!isValidAttack) return game
+
+    const updatedPieces = game.pieces.map(piece => {
+      if (piece.id === enemyPiece.id) {
+        const updatedPiece = { ...piece, status: `taken` } as Piece
+        return updatedPiece
+      }
+
+      return piece
+    })
+
+    return { ...game, pieces: updatedPieces }
+
+    // const selectedPiece = action.selectedPiece
+    // const targetPosition = action.targetPiece
     // const isTargetPositionSameAsCurrentPosition =
     //   selectedPiece.position.join(``) === targetPosition.join(``)
     // if (isTargetPositionSameAsCurrentPosition) return game

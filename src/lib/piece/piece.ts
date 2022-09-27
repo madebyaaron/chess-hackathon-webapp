@@ -167,6 +167,16 @@ export function ensureNewPositionIsValid(
   return doesValidMovesIncludeNewPosition
 }
 
+export function ensureAttackIsValid(
+  piece: Piece,
+  enemyPiece: Piece,
+  game: GameObject
+) {
+  const validEnemyPieces = resolveValidPieceAttacks(piece, game)
+  const isValidEnemyPiece = validEnemyPieces.some(enemy => enemy === enemyPiece)
+  return isValidEnemyPiece
+}
+
 export function findClosestOccupiedPositions(
   currentPosition: BoardPosition,
   occupiedPositions: BoardPosition[]

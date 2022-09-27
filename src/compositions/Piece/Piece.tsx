@@ -1,4 +1,4 @@
-import { Component, Piece as PieceInterface } from '@/types'
+import { Component, Piece, Piece as PieceInterface } from '@/types'
 import { resolveGridPositionClassNameFromBoardPosition } from 'src/lib/board'
 import { useGameObject } from 'src/stores/GameObjectStore'
 
@@ -19,11 +19,25 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) {
     e.stopPropagation()
-    const isAChessPieceSelected = piece === gameObject.selectedPiece
 
-    return isAChessPieceSelected
-      ? dispatch({ type: `select`, piece: undefined })
-      : dispatch({ type: `select`, piece })
+    const isTargetPieceAnOpponent = piece.player !== gameObject.playerTurn
+    const isTargetPieceSameAsSelectedPiece = piece === gameObject.selectedPiece
+    const isTargetPieceAnUnselectedPlayerPiece =
+      !isTargetPieceAnOpponent && !isTargetPieceSameAsSelectedPiece
+
+    if (isTargetPieceSameAsSelectedPiece)
+      dispatch({ type: `select`, piece: undefined })
+
+    if (isTargetPieceAnUnselectedPlayerPiece)
+      dispatch({ type: `select`, piece })
+
+    if (isTargetPieceAnOpponent) {
+      dispatch({
+        type: `attack`,
+        piece: gameObject.selectedPiece as Piece,
+        enemyPiece: piece,
+      })
+    }
   }
 
   const variants = {
@@ -41,14 +55,14 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
     <div
       data-testid={testId}
       id={`piece-${piece.id}`}
-      className={`flex items-center justify-center cursor-pointer pointer-events-auto ${
+      className={`flex items-center justify-center cursor-pointer pointer-events-auto drop-shadow-md ${
         isHighlighted ? `` : ``
       } ${piecePositionClassName} ${className}`}
       key={piece.id}
       onClick={e => handlePieceClick(piece, e)}
     >
       <span
-        className={`inline-block pt-2 pb-2.5 px-4 leading-none rounded-[2em] ${
+        className={`inline-block pt-2 pb-2.5 px-3.5 leading-none rounded-[2em] select-none ${
           isHighlighted
             ? variants[piece.player].selected
             : variants[piece.player].initial

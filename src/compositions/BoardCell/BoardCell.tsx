@@ -39,7 +39,7 @@ export function BoardCell({
       key={cellNumber}
       data-is-highlighted={isHighlighted ? true : null}
     >
-      <span className="opacity-30">{`${cell.position.toString()}`}</span>
+      <span className="select-none opacity-30">{`${cell.position.toString()}`}</span>
     </div>
   )
 }
