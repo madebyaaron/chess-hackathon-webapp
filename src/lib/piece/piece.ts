@@ -50,7 +50,9 @@ export function resolveValidPieceAttacks(
 ): Piece[] {
   const attackRange = selectedPiece.attackRange
   const currentPosition = selectedPiece.position
-  const occupiedPositions = game.pieces.map(p => p.position)
+  const occupiedPositions = game.pieces
+    .filter(p => p.status !== `taken`)
+    .map(p => p.position)
   const closestOccupiedPositions = findClosestOccupiedPositions(
     currentPosition,
     occupiedPositions

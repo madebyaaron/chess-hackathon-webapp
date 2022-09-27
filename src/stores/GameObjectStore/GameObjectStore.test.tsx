@@ -1,6 +1,11 @@
 import { generateGameObject } from 'src/lib/game'
 import { gameObjectReducer } from './GameObject.reducer'
-import { BoardPosition, MoveHistoryEvent, Piece } from '@/types'
+import {
+  AttackHistoryEvent,
+  BoardPosition,
+  MoveHistoryEvent,
+  Piece,
+} from '@/types'
 import { generateTestGame } from 'src/testUtils/generateTestGame'
 
 describe(`gameObjectReducer`, () => {
@@ -183,7 +188,7 @@ describe(`gameObjectReducer`, () => {
       expect(updatedEnemyPiece?.status).toEqual(`taken`)
     })
 
-    it.skip(`attacking a piece should set valid attacks to an empty array`, () => {
+    it(`attacking a piece should set valid attacks to an empty array`, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
         { pieceId: `black-pawn-2`, position: [2, 4] },
@@ -192,7 +197,16 @@ describe(`gameObjectReducer`, () => {
       const selectedPiece = game.pieces.find(
         p => p.id === `white-pawn-1`
       ) as Piece
+
       const enemyPiece = game.pieces.find(p => p.id === `black-pawn-2`) as Piece
+
+      const gameWithSelectedPiece = gameObjectReducer(game, {
+        type: `select`,
+        piece: selectedPiece,
+      })
+      expect(gameWithSelectedPiece.validAttacks.length).toBeGreaterThanOrEqual(
+        1
+      )
 
       const result = gameObjectReducer(game, {
         type: `attack`,
@@ -200,13 +214,10 @@ describe(`gameObjectReducer`, () => {
         enemyPiece,
       })
 
-      const updatedEnemyPiece = result.pieces.find(p => p.id === `black-pawn-2`)
-      const updatedSelectedPiece = result.pieces.find(
-        p => p.id === `white-pawn-1`
-      )
+      expect(result.validAttacks.length).toEqual(0)
     })
 
-    it.skip(`attacking a piece adds an attack history entry to gameObject.history`, () => {
+    it(`attacking a piece should set valid moves to an empty array`, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
         { pieceId: `black-pawn-2`, position: [2, 4] },
@@ -215,7 +226,14 @@ describe(`gameObjectReducer`, () => {
       const selectedPiece = game.pieces.find(
         p => p.id === `white-pawn-1`
       ) as Piece
+
       const enemyPiece = game.pieces.find(p => p.id === `black-pawn-2`) as Piece
+
+      const gameWithSelectedPiece = gameObjectReducer(game, {
+        type: `select`,
+        piece: selectedPiece,
+      })
+      expect(gameWithSelectedPiece.validMoves.length).toBeGreaterThanOrEqual(1)
 
       const result = gameObjectReducer(game, {
         type: `attack`,
@@ -223,13 +241,10 @@ describe(`gameObjectReducer`, () => {
         enemyPiece,
       })
 
-      const updatedEnemyPiece = result.pieces.find(p => p.id === `black-pawn-2`)
-      const updatedSelectedPiece = result.pieces.find(
-        p => p.id === `white-pawn-1`
-      )
+      expect(result.validAttacks.length).toEqual(0)
     })
 
-    it.skip(`attacking a piece adds a taken history entry to gameObject.history`, () => {
+    it(`attacking a piece adds an attack history entry to gameObject.history`, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
         { pieceId: `black-pawn-2`, position: [2, 4] },
@@ -246,13 +261,17 @@ describe(`gameObjectReducer`, () => {
         enemyPiece,
       })
 
-      const updatedEnemyPiece = result.pieces.find(p => p.id === `black-pawn-2`)
-      const updatedSelectedPiece = result.pieces.find(
-        p => p.id === `white-pawn-1`
-      )
+      expect(result.history.length).toEqual(1)
+      const attackHistoryEvent = result.history[0] as AttackHistoryEvent
+
+      expect(attackHistoryEvent.action).toEqual(`attack`)
+      expect(attackHistoryEvent.currentPosition).toEqual(selectedPiece.position)
+      expect(attackHistoryEvent.pieceId).toEqual(selectedPiece.id)
+      expect(attackHistoryEvent.targetPosition).toEqual(enemyPiece.position)
+      expect(attackHistoryEvent.targetPieceId).toEqual(enemyPiece.id)
     })
 
-    it.skip(`on successful attack, the selected piece takes the enemy piece's position `, () => {
+    it(`on successful attack, the selected piece takes the enemy piece's position `, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
         { pieceId: `black-pawn-2`, position: [2, 4] },
@@ -269,13 +288,14 @@ describe(`gameObjectReducer`, () => {
         enemyPiece,
       })
 
-      const updatedEnemyPiece = result.pieces.find(p => p.id === `black-pawn-2`)
       const updatedSelectedPiece = result.pieces.find(
         p => p.id === `white-pawn-1`
       )
+
+      expect(updatedSelectedPiece?.position).toEqual(enemyPiece.position)
     })
 
-    it.skip(`on successful attack, the turn is ended`, () => {
+    it(`on successful attack, the turn is ended`, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
         { pieceId: `black-pawn-2`, position: [2, 4] },
@@ -292,10 +312,7 @@ describe(`gameObjectReducer`, () => {
         enemyPiece,
       })
 
-      const updatedEnemyPiece = result.pieces.find(p => p.id === `black-pawn-2`)
-      const updatedSelectedPiece = result.pieces.find(
-        p => p.id === `white-pawn-1`
-      )
+      expect(result.playerTurn).toEqual(`black`)
     })
   })
 })

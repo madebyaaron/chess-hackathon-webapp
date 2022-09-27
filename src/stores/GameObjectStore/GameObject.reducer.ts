@@ -1,4 +1,10 @@
-import { BoardPosition, GameObject, MoveHistoryEvent, Piece } from '@/types'
+import {
+  AttackHistoryEvent,
+  BoardPosition,
+  GameObject,
+  MoveHistoryEvent,
+  Piece,
+} from '@/types'
 import {
   resolveValidPieceMoves,
   ensureNewPositionIsValid,
@@ -32,6 +38,8 @@ export function gameObjectReducer(
         validAttacks: [],
       }
     }
+
+    if (action?.piece?.player !== game.playerTurn) return game
 
     const doesPieceBelongToCurrentPlayer =
       selectedPiece?.player === game.playerTurn
@@ -110,14 +118,42 @@ export function gameObjectReducer(
 
     const updatedPieces = game.pieces.map(piece => {
       if (piece.id === enemyPiece.id) {
-        const updatedPiece = { ...piece, status: `taken` } as Piece
-        return updatedPiece
+        const updatedEnemyPiece = { ...piece, status: `taken` } as Piece
+        return updatedEnemyPiece
+      }
+
+      if (piece.id === selectedPiece.id) {
+        const updatedSelectedPiece = {
+          ...piece,
+          position: enemyPiece.position,
+        } as Piece
+
+        return updatedSelectedPiece
       }
 
       return piece
     })
 
-    return { ...game, pieces: updatedPieces }
+    const attackHistoryEvent: AttackHistoryEvent = {
+      action: `attack`,
+      pieceId: selectedPiece.id,
+      currentPosition: selectedPiece.position,
+      targetPosition: enemyPiece.position,
+      targetPieceId: enemyPiece.id,
+    }
+
+    const history = [...game.history, attackHistoryEvent]
+
+    const playerTurn = switchPlayer(game.playerTurn)
+
+    return {
+      ...game,
+      validMoves: [],
+      validAttacks: [],
+      history,
+      pieces: updatedPieces,
+      playerTurn,
+    }
 
     // const selectedPiece = action.selectedPiece
     // const targetPosition = action.targetPiece
