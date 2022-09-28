@@ -9,18 +9,24 @@ export function GameOverModal({
 }: Props) {
   const [game] = useGameObject()
 
-  if (game.status !== `gameOver`) return null
+  if (![`whiteWon`, `blackWon`].includes(game.status)) return null
+
+  const winner = game.status === `whiteWon` ? `White` : `Black`
 
   return (
     <div className="relative z-10">
       <div className="fixed inset-0 bg-black opacity-50" />
-      <dialog
-        open
-        className={`p-8 text-white bg-black shadow-xl ${className}`}
-        data-testid={testId}
-      >
-        <h1 className="font-semibold">GAME OVER</h1>
-      </dialog>
+      <div className="p-4">
+        <div
+          className={`p-8 text-white bg-black rounded-md shadow-xl top-4 left-1/2 -translate-x-1/2 ${className}`}
+          data-testid={testId}
+        >
+          <h1 className="font-semibold">
+            Game over:&nbsp;&nbsp;
+            <span className="uppercase">{winner} wins</span>
+          </h1>
+        </div>
+      </div>
     </div>
   )
 }

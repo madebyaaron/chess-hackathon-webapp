@@ -145,10 +145,9 @@ export function gameObjectReducer(
     }
 
     const history = [...game.history, attackHistoryEvent]
+    const status = resolveStatus(game, enemyPiece.name === `king`)
 
     const playerTurn = switchPlayer(game.playerTurn)
-
-    const status = enemyPiece.name === `king` ? `gameOver` : game.status
 
     return {
       ...game,
@@ -162,4 +161,18 @@ export function gameObjectReducer(
   }
 
   return game
+}
+
+function resolveStatus(
+  game: GameObject,
+  isKingTaken: boolean
+): GameObject[`status`] {
+  const playerTurn = game.playerTurn
+
+  if (!isKingTaken) return `ready`
+
+  if (playerTurn === `white`) return `whiteWon`
+  if (playerTurn === `black`) return `blackWon`
+
+  return game.status
 }

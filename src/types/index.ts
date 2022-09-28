@@ -139,7 +139,7 @@ export interface AttackHistoryEvent {
 
 // Game Object
 export interface GameObject {
-  status: `loading` | `ready` | `gameOver`
+  status: `loading` | `ready` | `whiteWon` | `blackWon`
   playerTurn: PlayerColor
   boardRows: BoardRows
   pieces: Piece[]

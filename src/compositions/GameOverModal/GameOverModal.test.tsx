@@ -8,7 +8,7 @@ describe(`GameOverModal`, () => {
   it(`renders the root`, () => {
     render(
       <GameObjectProvider
-        initialGameObject={generateGameObject({ status: `gameOver` })}
+        initialGameObject={generateGameObject({ status: `whiteWon` })}
       >
         <GameOverModal {...gameOverModalMockProps} />
       </GameObjectProvider>
