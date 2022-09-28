@@ -4,6 +4,7 @@ import { BoardPieces } from './Board.Pieces'
 import { BoardGrid } from './Board.Grid'
 import { GameInfoPanel } from 'src/compositions/GameInfoPanel'
 import { PieceGraveyard } from 'src/compositions/PieceGraveyard'
+import { GameOverModal } from 'src/compositions/GameOverModal'
 
 interface Props extends Component {
   initialGameObject: GameObject
@@ -23,6 +24,7 @@ export function Board({ initialGameObject, testId = `board` }: Props) {
           <BoardGrid className="col-start-1 row-start-1" />
         </div>
       </div>
+      <GameOverModal className="fixed top-0" />
     </GameObjectProvider>
   )
 }
