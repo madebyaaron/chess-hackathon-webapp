@@ -4,9 +4,15 @@ import { useGameObject } from 'src/stores/GameObjectStore'
 
 interface Props extends Component {
   piece: PieceInterface
+  disabled?: boolean
 }
 
-export function Piece({ piece, className = ``, testId = `piece` }: Props) {
+export function Piece({
+  piece,
+  className = ``,
+  disabled = false,
+  testId = `piece`,
+}: Props) {
   const piecePositionClassName = resolveGridPositionClassNameFromBoardPosition(
     piece.position
   )
@@ -16,7 +22,7 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
 
   function handlePieceClick(
     piece: PieceInterface,
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     e.stopPropagation()
 
@@ -52,14 +58,15 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
   }
 
   return (
-    <div
+    <button
       data-testid={testId}
       id={`piece-${piece.id}`}
-      className={`flex items-center justify-center cursor-pointer pointer-events-auto drop-shadow-md ${
+      className={`flex items-center justify-center pointer-events-auto drop-shadow-md ${
         isHighlighted ? `` : ``
       } ${piecePositionClassName} ${className}`}
       key={piece.id}
       onClick={e => handlePieceClick(piece, e)}
+      disabled={disabled}
     >
       <span
         className={`inline-block pt-2 pb-2.5 px-3.5 leading-none rounded-[2em] select-none ${
@@ -70,6 +77,6 @@ export function Piece({ piece, className = ``, testId = `piece` }: Props) {
       >
         {piece.name}
       </span>
-    </div>
+    </button>
   )
 }

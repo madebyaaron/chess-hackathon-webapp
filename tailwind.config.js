@@ -8,6 +8,9 @@ module.exports = {
       gridRowStart: {
         8: `8`,
       },
+      screens: {
+        xl: `1420px`,
+      },
     },
   },
   plugins: [],

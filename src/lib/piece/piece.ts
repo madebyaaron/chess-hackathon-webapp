@@ -32,7 +32,9 @@ export function resolveValidPieceMoves(piece: Piece, game: GameObject) {
     return [x + xDistance, y + yDistance] as BoardPosition
   })
 
-  const occupiedPositions = game.pieces.map(p => p.position)
+  const occupiedPositions = game.pieces
+    .filter(p => p.status !== `taken`)
+    .map(p => p.position)
 
   if (piece.name === `knight`)
     return resolveValidKnightPositions(positionsInRange, occupiedPositions)

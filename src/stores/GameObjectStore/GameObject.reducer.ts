@@ -113,6 +113,8 @@ export function gameObjectReducer(
     const selectedPiece = action.piece
     const enemyPiece = action.enemyPiece
 
+    if (selectedPiece?.player !== game.playerTurn) return game
+
     const isValidAttack = ensureAttackIsValid(selectedPiece, enemyPiece, game)
     if (!isValidAttack) return game
 
