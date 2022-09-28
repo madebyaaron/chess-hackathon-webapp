@@ -139,7 +139,7 @@ export interface AttackHistoryEvent {
 
 // Game Object
 export interface GameObject {
-  status: `loading` | `ready`
+  status: `loading` | `ready` | `gameOver`
   playerTurn: PlayerColor
   boardRows: BoardRows
   pieces: Piece[]
@@ -149,13 +149,4 @@ export interface GameObject {
   history: HistoryEntry[]
 }
 
-export interface GameObjectLike {
-  status?: `loading` | `ready`
-  playerTurn?: PlayerColor
-  boardRows?: BoardRows
-  pieces?: Piece[]
-  selectedPiece?: Piece
-  validMoves?: BoardPosition[]
-  validAttacks?: Piece[]
-  history?: HistoryEntry[]
-}
+export type GameObjectLike = Partial<GameObject>
