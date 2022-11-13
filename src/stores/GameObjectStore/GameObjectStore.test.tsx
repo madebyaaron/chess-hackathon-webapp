@@ -53,6 +53,16 @@ describe(`gameObjectReducer`, () => {
       expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
     })
 
+    it(`returns a result containing valid attacks when selecting a piece`, () => {
+      const game = generateGameObject()
+      const pawn = game.pieces.find(p => p.name === `pawn`)
+      const result = gameObjectReducer(game, {
+        type: `select`,
+        piece: pawn,
+      })
+      expect(result.validMoves.length).toBeGreaterThanOrEqual(1)
+    })
+
     it(`deselecting a piece should set no valid moves in result`, () => {
       const game = generateGameObject()
 

@@ -2,7 +2,6 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],

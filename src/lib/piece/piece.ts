@@ -3,7 +3,14 @@ import { BoardPosition, GameObject, Orientation, Piece } from '@/types'
 import { orientations } from 'src/constants/orientations'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
-const traversalOrientationMap = {
+type OrientationCoordinates = [
+  x: number,
+  y: number
+]
+
+type OrienationMap = Record<Orientation, OrientationCoordinates>
+
+const traversalOrientationMap:OrienationMap = {
   up: [0, -1],
   'up-right': [1, -1],
   right: [1, 0],
@@ -13,6 +20,7 @@ const traversalOrientationMap = {
   left: [-1, 0],
   'up-left': [-1, -1],
 }
+
 
 export function generatePieces(): Piece[] {
   return piecesInitialState
@@ -49,15 +57,44 @@ export function resolveValidPieceMoves(piece: Piece, game: GameObject) {
 export function resolveValidPieceAttacks(
   selectedPiece: Piece,
   game: GameObject
-): Piece[] {
+): Piece[] {  
+  const isPieceKnight = selectedPiece.name === `knight`
   const attackRange = selectedPiece.attackRange
   const currentPosition = selectedPiece.position
+  
   const occupiedPositions = game.pieces
     .filter(p => p.status !== `taken`)
+    .filter(p => p.player !== game.playerTurn)
     .map(p => p.position)
-  const closestOccupiedPositions = findClosestOccupiedPositions(
+
+
+  if (isPieceKnight) {
+    const positionsInRange = attackRange.map(range => {
+      const [x, y] = selectedPiece.position
+      const [top, right, bottom, left] = range
+      const yDistance = top - bottom
+      const xDistance = right - left
+      return [x + xDistance, y + yDistance] as BoardPosition
+    })
+  
+    const occupiedEnemyPositions = game.pieces
+      .filter(p => p.status !== `taken`)
+      .filter(p => p.player !== game.playerTurn)
+      .map(p => p.position)
+
+    const attackablePositions = occupiedEnemyPositions.filter(
+      enemyPosition => positionsInRange.map(pos => pos.join(`,`)).includes(enemyPosition.join(`,`))
+    )
+  
+    return attackablePositions.map(pos => {
+      const resolvedPiece = game.pieces.find(piece => piece.position.join(`,`) === pos.join(`,`)) as Piece
+      return resolvedPiece
+    }
+    )
+  }
+    const closestOccupiedPositions = findClosestOccupiedPositions(
     currentPosition,
-    occupiedPositions
+    occupiedPositions,
   )
 
   const attacksInRange = attackRange.map(range => {
@@ -91,7 +128,6 @@ export function resolveValidPieceAttacks(
   const inRangeEnemyPieces = inRangePieces.filter(
     piece => piece.player === switchPlayer(game.playerTurn)
   )
-
   return inRangeEnemyPieces
 }
 
@@ -183,13 +219,14 @@ export function ensureAttackIsValid(
 
 export function findClosestOccupiedPositions(
   currentPosition: BoardPosition,
-  occupiedPositions: BoardPosition[]
+  occupiedPositions: BoardPosition[],
 ) {
+
   const obstructionObject = orientations.reduce((obj, orientation) => {
     obj[orientation] = findClosestOccupiedPosition(
       currentPosition,
       occupiedPositions,
-      orientation
+      orientation,
     )
     return obj
   }, {} as Record<Orientation, BoardPosition | undefined>)
@@ -200,7 +237,7 @@ export function findClosestOccupiedPositions(
 export function findClosestOccupiedPosition(
   currentPosition: BoardPosition,
   occupiedPositions: BoardPosition[],
-  orientation: Orientation
+  orientation: Orientation,
 ) {
   return resolveBoardPositionsByOrientation(currentPosition, orientation).find(
     pos => occupiedPositions.some(occPos => occPos.join(``) === pos.join(``))
@@ -209,8 +246,10 @@ export function findClosestOccupiedPosition(
 
 export function resolveBoardPositionsByOrientation(
   position: BoardPosition,
-  orientation: Orientation
+  orientation: Orientation,
 ) {
+
+
   const traversalOrientation = traversalOrientationMap[orientation]
   const resolvedPositions = []
 
@@ -224,6 +263,7 @@ export function resolveBoardPositionsByOrientation(
       currentX + adjustmentX,
       currentY + adjustmentY,
     ] as BoardPosition
+
     resolvedPositions.push(newPosition)
     currentPosition = newPosition
   }

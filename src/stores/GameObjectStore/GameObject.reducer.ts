@@ -49,6 +49,7 @@ export function gameObjectReducer(
       selectedPiece,
       game
     )
+    
 
     const validAttacks: Piece[] = resolveValidPieceAttacks(selectedPiece, game)
 
