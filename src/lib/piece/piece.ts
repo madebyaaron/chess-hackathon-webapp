@@ -61,10 +61,8 @@ export function resolveValidPieceAttacks(
   const isPieceKnight = selectedPiece.name === `knight`
   const attackRange = selectedPiece.attackRange
   const currentPosition = selectedPiece.position
-  
   const occupiedPositions = game.pieces
     .filter(p => p.status !== `taken`)
-    .filter(p => p.player !== game.playerTurn)
     .map(p => p.position)
 
 
