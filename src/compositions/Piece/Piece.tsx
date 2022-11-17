@@ -76,7 +76,7 @@ export function Piece({
       disabled={disabled}
     >
       <span
-        className={`inline-block pt-2 pb-2.5 px-3.5 leading-none rounded-[2em] select-none ${
+        className={`inline-block pt-2 pb-2.5 px-3.5 w-[84px] leading-none rounded-[2em] select-none ${
           isHighlighted
             ? variants[piece.player].selected
             : variants[piece.player].initial
