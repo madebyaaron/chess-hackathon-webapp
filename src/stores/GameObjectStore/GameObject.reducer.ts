@@ -10,6 +10,7 @@ import {
   ensureNewPositionIsValid,
   resolveValidPieceAttacks,
   ensureAttackIsValid,
+  promotePieceIfValid,
 } from 'src/lib/piece'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
@@ -99,10 +100,11 @@ export function gameObjectReducer(
 
     const playerTurn = switchPlayer(game.playerTurn)
 
+    const updatedGame = promotePieceIfValid(game, pieces, targetPosition)
+
     return {
-      ...game,
+      ...updatedGame,
       selectedPiece: undefined,
-      pieces,
       history,
       validMoves: [],
       validAttacks: [],
@@ -150,13 +152,14 @@ export function gameObjectReducer(
 
     const playerTurn = switchPlayer(game.playerTurn)
 
+    const updatedGame = promotePieceIfValid(game, updatedPieces, enemyPiece.position)
+
     return {
-      ...game,
+      ...updatedGame,
       status,
       validMoves: [],
       validAttacks: [],
       history,
-      pieces: updatedPieces,
       playerTurn,
     }
   }

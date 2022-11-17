@@ -31,13 +31,19 @@ export function Piece({
     const isTargetPieceAnUnselectedPlayerPiece =
       !isTargetPieceAnOpponent && !isTargetPieceSameAsSelectedPiece
 
-    if (isTargetPieceSameAsSelectedPiece)
+    if (isTargetPieceSameAsSelectedPiece) {
       dispatch({ type: `select`, piece: undefined })
+      return
+    }
 
-    if (isTargetPieceAnUnselectedPlayerPiece)
+    if (isTargetPieceAnUnselectedPlayerPiece && !isTargetPieceAnOpponent) {
       dispatch({ type: `select`, piece })
+      return
+    }
+      
 
-    if (isTargetPieceAnOpponent) {
+    if (isTargetPieceAnOpponent && !!gameObject.selectedPiece) {
+      
       dispatch({
         type: `attack`,
         piece: gameObject.selectedPiece as Piece,
@@ -60,6 +66,7 @@ export function Piece({
   return (
     <button
       data-testid={testId}
+      data-position={piece.position.join(`,`)}
       id={`piece-${piece.id}`}
       className={`flex items-center justify-center pointer-events-auto drop-shadow-md ${
         isHighlighted ? `` : ``

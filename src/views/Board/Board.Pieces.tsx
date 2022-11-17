@@ -17,7 +17,7 @@ export function BoardPieces({
       data-testid={testId}
     >
       {gameObject.pieces
-        .filter(piece => piece.status !== `taken`)
+        .filter(piece => [`inPlay`, `init`].includes(piece.status))
         .map(piece => {
           return <Piece key={piece.id} piece={piece} />
         })}

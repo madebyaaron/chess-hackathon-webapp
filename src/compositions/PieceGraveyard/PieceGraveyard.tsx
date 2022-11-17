@@ -20,14 +20,14 @@ export function PieceGraveyard({
       className={`${className} grid-cols-2 hidden xl:grid p-4`}
       data-testid={testId}
     >
-      <div className="grid grid-flow-row">
+      <div className="flex flex-col items-start gap-2">
         {whiteTakenPieces.map(piece => (
           <div className="p-2 pointer-events-none" key={piece.id}>
             <Piece piece={piece} disabled />
           </div>
         ))}
       </div>
-      <div className="grid grid-flow-row">
+      <div className="flex flex-col items-start gap-2">
         {blackTakenPieces.map(piece => (
           <div className="p-2 pointer-events-none" key={piece.id}>
             <Piece piece={piece} disabled />

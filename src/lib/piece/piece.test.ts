@@ -200,3 +200,11 @@ describe(`findClosestOccupiedPositions`, () => {
     })
   })
 })
+
+describe(`promotePieceIfValid`, () => {
+  // it(`removes the selected piece if promoted`, () => {
+
+  // })
+
+  it.todo(`adds an additional queen if promoted`)
+})

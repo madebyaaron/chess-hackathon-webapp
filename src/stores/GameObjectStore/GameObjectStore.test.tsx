@@ -9,6 +9,7 @@ import {
 import { generateTestGame } from 'src/testUtils/generateTestGame'
 
 describe(`gameObjectReducer`, () => {
+
   describe(`select piece`, () => {
     it(`allows the current player to select a piece belonging to them`, () => {
       const game = generateGameObject()
@@ -106,18 +107,6 @@ describe(`gameObjectReducer`, () => {
       expect(result.validMoves.length).toEqual(0)
     })
 
-    it(`moving a piece ends the current turn`, () => {
-      const game = generateGameObject()
-      const currentPlayer = game.playerTurn
-      const leftWhitePawn = game.pieces[8] as Piece
-      const newPosition: BoardPosition = [1, 6]
-      const result = gameObjectReducer(game, {
-        type: `move`,
-        piece: leftWhitePawn,
-        position: newPosition,
-      })
-      expect(result.playerTurn).not.toEqual(currentPlayer)
-    })
 
     it(`successfully moving a piece sets the selectedPiece prop of the game object to undefined`, () => {
       const game = generateGameObject()
@@ -150,6 +139,8 @@ describe(`gameObjectReducer`, () => {
 
       expect(result.history).toEqual([moveHistoryEvent])
     })
+
+    it.todo(`promotes the piece to a queen if moving to the opposite side of the board and selected piece is a pawn`)
   })
 
   describe(`attack piece`, () => {
@@ -305,26 +296,6 @@ describe(`gameObjectReducer`, () => {
       expect(updatedSelectedPiece?.position).toEqual(enemyPiece.position)
     })
 
-    it(`on successful attack, the turn is ended`, () => {
-      const game = generateTestGame([
-        { pieceId: `white-pawn-1`, position: [1, 5] },
-        { pieceId: `black-pawn-2`, position: [2, 4] },
-      ])
-
-      const selectedPiece = game.pieces.find(
-        p => p.id === `white-pawn-1`
-      ) as Piece
-      const enemyPiece = game.pieces.find(p => p.id === `black-pawn-2`) as Piece
-
-      const result = gameObjectReducer(game, {
-        type: `attack`,
-        piece: selectedPiece,
-        enemyPiece,
-      })
-
-      expect(result.playerTurn).toEqual(`black`)
-    })
-
     it(`if white takes the black king, the game is set to whiteWin`, () => {
       const game = generateTestGame([
         { pieceId: `white-pawn-1`, position: [1, 5] },
@@ -344,27 +315,29 @@ describe(`gameObjectReducer`, () => {
 
       expect(result.status).toEqual(`whiteWon`)
     })
-  })
 
-  it(`if black takes the white king, the game is set to blackWin`, () => {
-    const game = generateTestGame([
-      { pieceId: `black-pawn-1`, position: [5, 4] },
-      { pieceId: `white-king-1`, position: [4, 5] },
-    ])
+    it(`if black takes the white king, the game is set to blackWin`, () => {
+      const game = generateTestGame([
+        { pieceId: `black-pawn-1`, position: [5, 4] },
+        { pieceId: `white-king-1`, position: [4, 5] },
+      ])
 
-    game.playerTurn = `black`
+      game.playerTurn = `black`
 
-    const selectedPiece = game.pieces.find(
-      p => p.id === `black-pawn-1`
-    ) as Piece
-    const enemyPiece = game.pieces.find(p => p.id === `white-king-1`) as Piece
+      const selectedPiece = game.pieces.find(
+        p => p.id === `black-pawn-1`
+      ) as Piece
+      const enemyPiece = game.pieces.find(p => p.id === `white-king-1`) as Piece
 
-    const result = gameObjectReducer(game, {
-      type: `attack`,
-      piece: selectedPiece,
-      enemyPiece,
+      const result = gameObjectReducer(game, {
+        type: `attack`,
+        piece: selectedPiece,
+        enemyPiece,
+      })
+
+      expect(result.status).toEqual(`blackWon`)
     })
 
-    expect(result.status).toEqual(`blackWon`)
+    it.todo(`promotes the piece to a queen if moving to the opposite side of the board and selected piece is a pawn`)
   })
 })

@@ -34,7 +34,7 @@ export type PieceName = `pawn` | `knight` | `bishop` | `rook` | `queen` | `king`
 
 export type PlayerColor = `white` | `black`
 
-export type PieceStatus = `init` | `inPlay` | `taken`
+export type PieceStatus = `init` | `inPlay` | `taken` | `promoted`
 
 export type PieceMovementRange = [number, number, number, number][]
 
@@ -72,7 +72,7 @@ export type PieceId =
   | `black-pawn-7`
   | `black-pawn-8`
 export interface Piece {
-  id: PieceId
+  id: PieceId | string
   name: PieceName
   position: BoardPosition
   status: PieceStatus
@@ -132,10 +132,6 @@ export interface AttackHistoryEvent {
   targetPieceId: Piece[`id`]
   targetPosition: BoardPosition
 }
-
-// white-pawn-1 move [0,1]
-// black-queen-1 attack white-rook-2
-// white-rook taken
 
 // Game Object
 export interface GameObject {

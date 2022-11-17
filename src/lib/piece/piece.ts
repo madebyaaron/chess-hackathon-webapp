@@ -327,3 +327,49 @@ function isPositionObstructed(
 
   return true
 }
+
+
+export function generatePromotedPiece(game: GameObject, position: BoardPosition) {
+    // get current player
+    const currentPlayer = game.playerTurn
+
+    // count number of queens for this player
+    const numberOfQueens = game.pieces.filter(piece => piece.name === `queen` && piece.player === currentPlayer).length
+
+    // return new queen piece with an id of number of queens plus one
+    const newQueen:Piece = {...piecesInitialState.find(p => p.name === `queen` && p.player === currentPlayer)} as Piece
+    newQueen.id = `${currentPlayer}-queen-${numberOfQueens + 1}`
+    newQueen.position = position
+
+    return newQueen
+}
+
+export function isPieceOnOpposingSide(piece: Piece, position: BoardPosition) {
+  if (piece.player === `black` && position[1] === 8) return true
+  if (piece.player === `white` && position[1] === 1) return true
+  return false
+}
+
+export function isPieceOfType(piece: Piece, type: Piece[`name`]) {
+  return piece.name === type
+}
+
+export function promotePieceIfValid(providedGame: GameObject, pieces: Piece[], position: BoardPosition) {
+  const game = {...providedGame, pieces }
+  
+  const selectedPiece = game.selectedPiece
+  if (!selectedPiece) return game
+  
+  if (selectedPiece?.name !== `pawn`) return game
+  if (!isPieceOnOpposingSide(selectedPiece, position)) return game
+  
+  const promotedPiece = generatePromotedPiece(game, position)
+  
+  const updatedPieces = game.pieces.map(p => {
+    if (p.id === selectedPiece.id) return {...p, status: `promoted` as Piece[`status`]}
+    return p
+  })
+  const updatedPiecesWithNewPromotedPiece = [...updatedPieces, promotedPiece]
+  const updatedGame = { ...game, pieces: updatedPiecesWithNewPromotedPiece }
+  return updatedGame
+}
