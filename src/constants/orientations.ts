@@ -1,6 +1,4 @@
-import { Orientation } from '@/types'
-
-export const orientations: Orientation[] = [
+export const orientations = [
   `up`,
   `up-right`,
   `right`,
@@ -9,4 +7,4 @@ export const orientations: Orientation[] = [
   `down-left`,
   `left`,
   `up-left`,
-]
+] as const

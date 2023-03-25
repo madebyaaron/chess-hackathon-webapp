@@ -664,4 +664,4 @@ export const piecesInitialState = [
     player: `black`,
     status: `init`,
   },
-] as Piece[]
+] as const

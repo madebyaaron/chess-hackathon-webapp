@@ -1,5 +1,5 @@
 import { Component } from '@/types'
-import { useGameObject } from 'src/stores/GameObjectStore'
+import { useGameObjectStore } from 'src/stores/zustandStore'
 
 export interface Props extends Component {}
 
@@ -7,11 +7,11 @@ export function GameOverModal({
   className = ``,
   testId = `game-over-modal`,
 }: Props) {
-  const [game] = useGameObject()
+  const { status } = useGameObjectStore(state => state)
 
-  if (![`whiteWon`, `blackWon`].includes(game.status)) return null
+  if (![`whiteWon`, `blackWon`].includes(status)) return null
 
-  const winner = game.status === `whiteWon` ? `White` : `Black`
+  const winner = status === `whiteWon` ? `White` : `Black`
 
   return (
     <div className="relative z-10">

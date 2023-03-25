@@ -1,6 +1,6 @@
 import { BoardPosition, Component } from '@/types'
 import { BoardCell } from 'src/compositions/BoardCell'
-import { useGameObject } from 'src/stores/GameObjectStore/GameObjectStore'
+import { useGameObjectStore } from 'src/stores/zustandStore'
 
 interface Props extends Component {}
 
@@ -8,19 +8,19 @@ export function BoardGrid({
   className = ``,
   testId = `board-underlay`,
 }: Props) {
-  const [gameObject, dispatch] = useGameObject()
+  const { validMoves, validAttacks, selectedPiece, boardRows, onMoveAction } =
+    useGameObjectStore(state => state)
 
   const allValidPositions = [
-    ...gameObject.validMoves,
-    ...gameObject.validAttacks.map(a => a.position),
+    ...validMoves,
+    ...validAttacks.map(a => a.position),
   ]
 
   function handleCellClick(position: BoardPosition) {
-    const piece = gameObject.selectedPiece
-    
-    if (piece) {
-      dispatch({ type: `move`, piece, position })
-    }
+    const piece = selectedPiece
+
+    if (!onMoveAction) throw new Error(`onMoveAction is not defined`)
+    if (piece) onMoveAction(piece, position)
   }
 
   return (
@@ -28,7 +28,7 @@ export function BoardGrid({
       className={`grid grid-cols-8 shadow-xl ${className}`}
       data-testid={testId}
     >
-      {gameObject.boardRows.map((row, rowIndex) =>
+      {boardRows.map((row, rowIndex) =>
         row.map(cell => {
           const cellTheme = rowIndex % 2 === 1 ? `odd` : `even`
 

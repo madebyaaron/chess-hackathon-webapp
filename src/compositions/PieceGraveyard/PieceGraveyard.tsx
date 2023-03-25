@@ -1,6 +1,6 @@
 import { Component } from '@/types'
-import { useGameObject } from 'src/stores/GameObjectStore'
 import { Piece } from '../Piece/Piece'
+import { useGameObjectStore } from 'src/stores/zustandStore'
 
 export interface Props extends Component {}
 
@@ -8,9 +8,9 @@ export function PieceGraveyard({
   className = ``,
   testId = `piece-graveyard`,
 }: Props) {
-  const [game] = useGameObject()
+  const { pieces } = useGameObjectStore(state => state)
 
-  const takenPieces = game.pieces.filter(piece => piece.status === `taken`)
+  const takenPieces = pieces.filter(piece => piece.status === `taken`)
 
   const whiteTakenPieces = takenPieces.filter(piece => piece.player === `white`)
   const blackTakenPieces = takenPieces.filter(piece => piece.player === `black`)
