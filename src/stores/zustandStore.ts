@@ -2,12 +2,19 @@ import { create } from 'zustand'
 import { generateBoard } from 'src/lib/board'
 import {
   ensureAttackIsValid,
+  ensureNewPositionIsValid,
   generatePieces,
   promotePieceIfValid,
   resolveValidPieceAttacks,
   resolveValidPieceMoves,
 } from 'src/lib/piece'
-import { Piece, GameObject, BoardPosition, AttackHistoryEvent } from '@/types'
+import {
+  Piece,
+  GameObject,
+  BoardPosition,
+  AttackHistoryEvent,
+  MoveHistoryEvent,
+} from '@/types'
 import { switchPlayer } from 'src/utils/switchPlayer'
 
 export const useGameObjectStore = create<GameObject>(set => ({
@@ -21,8 +28,10 @@ export const useGameObjectStore = create<GameObject>(set => ({
   selectedPiece: undefined,
   onSelectAction: (piece: Piece | undefined) =>
     set((state: GameObject) => resolveSelectAction(piece, state)),
-  onAttackPiece: (piece: Piece, enemyPiece: Piece) =>
+  onAttackAction: (piece: Piece, enemyPiece: Piece) =>
     set((state: GameObject) => resolveAttackAction(piece, enemyPiece, state)),
+  onMoveAction: (piece: Piece, position: BoardPosition) =>
+    set((state: GameObject) => resolveMoveAction(piece, position, state)),
 }))
 
 function resolveSelectAction(
@@ -114,6 +123,56 @@ function resolveAttackAction(
     validMoves: [],
     validAttacks: [],
     history,
+    playerTurn,
+  }
+}
+
+function resolveMoveAction(
+  piece: Piece,
+  position: BoardPosition,
+  state: GameObject
+) {
+  const selectedPiece = piece
+  const targetPosition = position
+
+  const isTargetPositionSameAsCurrentPosition =
+    selectedPiece.position.join(``) === targetPosition.join(``)
+  if (isTargetPositionSameAsCurrentPosition) return state
+
+  const isValidMove = ensureNewPositionIsValid(selectedPiece, position, state)
+
+  if (!isValidMove) return state
+
+  const pieces = state.pieces.map(piece => {
+    const isTargetPiece = piece === selectedPiece
+    if (!isTargetPiece) return piece
+
+    return {
+      ...piece,
+      position,
+      status: `inPlay`,
+    } as Piece
+  })
+
+  const moveHistoryEntry: MoveHistoryEvent = {
+    action: `move`,
+    pieceId: selectedPiece.id,
+    targetPosition: targetPosition,
+    currentPosition: selectedPiece.position,
+    player: state.playerTurn,
+  }
+  const history = [...state.history, moveHistoryEntry]
+
+  const playerTurn = switchPlayer(state.playerTurn)
+
+  const updatedGame = promotePieceIfValid(state, pieces, targetPosition)
+
+  return {
+    ...updatedGame,
+    selectedPiece: undefined,
+    history,
+    validMoves: [],
+    validAttacks: [],
     playerTurn,
   }
 }
