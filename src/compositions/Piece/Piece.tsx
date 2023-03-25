@@ -1,6 +1,6 @@
-import { Component, Piece, Piece as PieceInterface } from '@/types'
+import { Component, Piece as PieceInterface } from '@/types'
 import { resolveGridPositionClassNameFromBoardPosition } from 'src/lib/board'
-import { useGameObject } from 'src/stores/GameObjectStore'
+import { useGameObjectStore } from 'src/stores/zustandStore'
 
 interface Props extends Component {
   piece: PieceInterface
@@ -16,9 +16,10 @@ export function Piece({
   const piecePositionClassName = resolveGridPositionClassNameFromBoardPosition(
     piece.position
   )
-  const [gameObject, dispatch] = useGameObject()
+  const { playerTurn, selectedPiece, onSelectAction, onAttackAction } =
+    useGameObjectStore(state => state)
 
-  const isHighlighted = gameObject.selectedPiece === piece
+  const isHighlighted = selectedPiece === piece
 
   function handlePieceClick(
     piece: PieceInterface,
@@ -26,30 +27,20 @@ export function Piece({
   ) {
     e.stopPropagation()
 
-    const isTargetPieceAnOpponent = piece.player !== gameObject.playerTurn
-    const isTargetPieceSameAsSelectedPiece = piece === gameObject.selectedPiece
+    const isTargetPieceAnOpponent = piece.player !== playerTurn
+    const isTargetPieceSameAsSelectedPiece = piece === selectedPiece
     const isTargetPieceAnUnselectedPlayerPiece =
       !isTargetPieceAnOpponent && !isTargetPieceSameAsSelectedPiece
 
-    if (isTargetPieceSameAsSelectedPiece) {
-      dispatch({ type: `select`, piece: undefined })
-      return
-    }
+    if (!onSelectAction) throw new Error(`onSelectAction is not defined`)
+    if (!onAttackAction) throw new Error(`onAttackAction is not defined`)
 
-    if (isTargetPieceAnUnselectedPlayerPiece && !isTargetPieceAnOpponent) {
-      dispatch({ type: `select`, piece })
-      return
-    }
-      
+    if (isTargetPieceSameAsSelectedPiece) return onSelectAction(undefined)
+    if (isTargetPieceAnUnselectedPlayerPiece && !isTargetPieceAnOpponent)
+      return onSelectAction(piece)
 
-    if (isTargetPieceAnOpponent && !!gameObject.selectedPiece) {
-      
-      dispatch({
-        type: `attack`,
-        piece: gameObject.selectedPiece as Piece,
-        enemyPiece: piece,
-      })
-    }
+    if (isTargetPieceAnOpponent && !!selectedPiece)
+      return onAttackAction(selectedPiece, piece)
   }
 
   const variants = {
@@ -61,7 +52,7 @@ export function Piece({
       initial: `text-white bg-slate-700 border-2 border-white font-semibold`,
       selected: `bg-rose-700 text-white  border-2 border-white  font-semibold`,
     },
-  }
+  } as const
 
   return (
     <button

@@ -1,13 +1,16 @@
 import { create } from 'zustand'
 import { generateBoard } from 'src/lib/board'
 import {
+  ensureAttackIsValid,
   generatePieces,
+  promotePieceIfValid,
   resolveValidPieceAttacks,
   resolveValidPieceMoves,
 } from 'src/lib/piece'
-import { Piece, GameObject, BoardPosition } from '@/types'
+import { Piece, GameObject, BoardPosition, AttackHistoryEvent } from '@/types'
+import { switchPlayer } from 'src/utils/switchPlayer'
 
-export const useGameObjectStore = create((set, get) => ({
+export const useGameObjectStore = create<GameObject>(set => ({
   status: `ready`,
   playerTurn: `white`,
   boardRows: generateBoard(),
@@ -15,11 +18,17 @@ export const useGameObjectStore = create((set, get) => ({
   validMoves: [],
   validAttacks: [],
   history: [],
-  selectedPiece: (piece: Piece) =>
-    set((state: GameObject) => resolveSelectedPiece(piece, state)),
+  selectedPiece: undefined,
+  onSelectAction: (piece: Piece | undefined) =>
+    set((state: GameObject) => resolveSelectAction(piece, state)),
+  onAttackPiece: (piece: Piece, enemyPiece: Piece) =>
+    set((state: GameObject) => resolveAttackAction(piece, enemyPiece, state)),
 }))
 
-function resolveSelectedPiece(selectedPiece: Piece, state: GameObject) {
+function resolveSelectAction(
+  selectedPiece: Piece | undefined,
+  state: GameObject
+) {
   const isPieceSelected = selectedPiece !== undefined
 
   if (!isPieceSelected) {
@@ -52,16 +61,73 @@ function resolveSelectedPiece(selectedPiece: Piece, state: GameObject) {
   } as GameObject
 }
 
-// example zustand store
-// import create from 'zustand'
-// import { devtools } from 'zustand/middleware'
-//
-// const useStore = create(
-//   devtools((set, get) => ({
-//     count: 0,
-//     increment: () => set((state) => ({ count: state.count + 1 })),
-//     decrement: () => set((state) => ({ count: state.count - 1 })),
-//     reset: () => set({ count: 0 }),
-//   }))
-// )
-//
+function resolveAttackAction(
+  selectedPiece: Piece,
+  enemyPiece: Piece,
+  state: GameObject
+) {
+  if (selectedPiece?.player !== state.playerTurn) return state
+
+  const isValidAttack = ensureAttackIsValid(selectedPiece, enemyPiece, state)
+  if (!isValidAttack) return state
+
+  const updatedPieces = state.pieces.map(piece => {
+    if (piece.id === enemyPiece.id) {
+      const updatedEnemyPiece = { ...piece, status: `taken` } as Piece
+      return updatedEnemyPiece
+    }
+
+    if (piece.id === selectedPiece.id) {
+      const updatedSelectedPiece = {
+        ...piece,
+        position: enemyPiece.position,
+      } as Piece
+
+      return updatedSelectedPiece
+    }
+
+    return piece
+  })
+
+  const attackHistoryEvent: AttackHistoryEvent = {
+    action: `attack`,
+    pieceId: selectedPiece.id,
+    currentPosition: selectedPiece.position,
+    targetPosition: enemyPiece.position,
+    targetPieceId: enemyPiece.id,
+  }
+
+  const history = [...state.history, attackHistoryEvent]
+  const status = resolveStatus(state, enemyPiece.name === `king`)
+
+  const playerTurn = switchPlayer(state.playerTurn)
+
+  const updatedGame = promotePieceIfValid(
+    state,
+    updatedPieces,
+    enemyPiece.position
+  )
+
+  return {
+    ...updatedGame,
+    status,
+    validMoves: [],
+    validAttacks: [],
+    history,
+    playerTurn,
+  }
+}
+
+function resolveStatus(
+  game: GameObject,
+  isKingTaken: boolean
+): GameObject[`status`] {
+  const playerTurn = game.playerTurn
+
+  if (!isKingTaken) return `ready`
+
+  if (playerTurn === `white`) return `whiteWon`
+  if (playerTurn === `black`) return `blackWon`
+
+  return game.status
+}

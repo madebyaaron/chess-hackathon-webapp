@@ -143,6 +143,8 @@ export interface GameObject {
   validMoves: BoardPosition[]
   validAttacks: Piece[]
   history: HistoryEntry[]
+  onSelectAction?: (piece: Piece | undefined) => void
+  onAttackAction?: (piece: Piece, enemyPiece: Piece) => void
 }
 
 export type GameObjectLike = Partial<GameObject>

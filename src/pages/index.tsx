@@ -1,11 +1,7 @@
 import { Board } from '@/views/Board'
-import { GameObject } from '@/types'
-import { generateGameObject } from 'src/lib/game'
-
-const initialGameObject: GameObject = generateGameObject()
 
 function Home() {
-  return <Board initialGameObject={initialGameObject} />
+  return <Board />
 }
 
 export default Home
