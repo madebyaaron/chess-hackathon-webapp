@@ -1,6 +1,5 @@
 import { Component } from '@/types'
 import { useEffect } from 'react'
-import { useGameObject } from 'src/stores/GameObjectStore'
 import { useGameObjectStore } from 'src/stores/zustandStore'
 
 export interface Props extends Component {}

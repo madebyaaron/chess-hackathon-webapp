@@ -1,5 +1,4 @@
 import { Component } from '@/types'
-import { useGameObject } from 'src/stores/GameObjectStore'
 import { Piece } from '../Piece/Piece'
 import { useGameObjectStore } from 'src/stores/zustandStore'
 
