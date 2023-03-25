@@ -10,8 +10,8 @@ interface Props extends Component {}
 export function Board({ testId = `board` }: Props) {
   return (
     <>
-      {/* <GameInfoPanel className="fixed bottom-0 right-0" /> */}
-      {/* <PieceGraveyard className="fixed top-0 right-0" /> */}
+      <GameInfoPanel className="fixed bottom-0 right-0" />
+      <PieceGraveyard className="fixed top-0 right-0" />
       <div
         className="flex items-center justify-center w-full h-full min-h-screen bg-slate-200"
         data-testid={testId}

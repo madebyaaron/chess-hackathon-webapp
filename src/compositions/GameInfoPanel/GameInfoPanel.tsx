@@ -1,6 +1,7 @@
 import { Component } from '@/types'
 import { useEffect } from 'react'
 import { useGameObject } from 'src/stores/GameObjectStore'
+import { useGameObjectStore } from 'src/stores/zustandStore'
 
 export interface Props extends Component {}
 
@@ -8,7 +9,7 @@ export function GameInfoPanel({
   className = ``,
   testId = `game-info-panel`,
 }: Props) {
-  const [game] = useGameObject()
+  const { playerTurn } = useGameObjectStore(state => state)
 
   // useEffect(() => {
   //   console.log(game)
@@ -18,7 +19,7 @@ export function GameInfoPanel({
     <div className={`p-8 bg-white shadow-xl ${className}`} data-testid={testId}>
       <div className="flex gap-1 font-mono">
         <div className="font-bold">Player turn:</div>
-        <div className="">{game.playerTurn}</div>
+        <div className="">{playerTurn}</div>
       </div>
     </div>
   )
